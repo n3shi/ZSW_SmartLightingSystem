@@ -1,7 +1,8 @@
 <template>
-<div>
+<div class="wrapper">
     <div class="v27_291"></div>
-    <span class="v27_290">Schedule</span>
+  <div class="empty"/>
+    <span class="label">Schedule</span>
     <div class="v27_260">
         <span class="v27_261">Turn off all lights at 00:00</span>
         <div class="v27_262">
@@ -16,6 +17,7 @@
             <div class="v27_288"></div>
         </div>
     </div>
+     <!-- <div class="empty"/> -->
 </div>
 </template>
 
@@ -26,6 +28,92 @@ export default {
 </script>
 
 <style>
+
+.wrapper{
+  display:block;
+  position:static;
+  overflow: visible;
+}
+
+.empty {
+  height: 100px;
+}
+
+.v27_260 {
+  width: 572px;
+  height: 128px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: relative;
+  /* top: 598px; */
+  left: 94px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.25);
+  /* overflow: hidden; */
+}
+.v27_261 {
+  width: 227px;
+  color: rgba(36,36,35,1);
+  position: absolute;
+  top: 53px;
+  left: 81px;
+  font-family: Roboto;
+  font-weight: Regular;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+.v27_262 {
+  width: 50px;
+  height: 50px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 39px;
+  left: 23px;
+  /* overflow: hidden; */
+}
+.v27_263 {
+  width: 27px;
+  height: 39px;
+  background: rgba(36,36,35,1);
+  opacity: 1;
+  position: absolute;
+  top: 6px;
+  left: 11px;
+}
+.v27_264 {
+  width: 61px;
+  color: rgba(175,175,175,1);
+  position: absolute;
+  top: 53px;
+  left: 479px;
+  font-family: Roboto;
+  font-weight: Regular;
+  font-size: 20px;
+  opacity: 1;
+  text-align: left;
+}
+
+.v27_284 {
+  width: 80px;
+  height: 80px;
+  /* background: url("../images/v27_284.png"); */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
+  float: right;
+  right: 400px;
+  /* top: 796px; */
+  /* left: 300px; */
+  /* overflow: hidden; */
+}
+
 .v27_285 {
   width: 80px;
   height: 80px;
@@ -41,10 +129,10 @@ export default {
   height: 40px;
   background: rgba(255,255,255,1);
   opacity: 1;
-  position: absolute;
+  position: relative;
   top: 20px;
   left: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .v27_287 {
   width: 2px;
@@ -68,11 +156,12 @@ export default {
   opacity: 1;
   text-align: left;
 }
-.v27_290 {
+.label {
   width: 99px;
+  height:100px;
   color: rgba(36,36,35,1);
-  position: absolute;
-  top: 546px;
+  position: relative;
+  /* top: 546px; */
   left: 94px;
   font-family: Roboto;
   font-weight: Regular;
@@ -85,9 +174,9 @@ export default {
   height: 1px;
   background: linear-gradient(rgba(255,255,255,1), rgba(51,53,51,1));
   opacity: 1;
-  position: absolute;
-  top: 515px;
-  left: 0px;
-  overflow: hidden;
+  position: relative;
+  /* top: 515px; */
+  left: 17px;
+  /* overflow: hidden; */
 }
 </style>

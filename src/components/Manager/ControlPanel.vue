@@ -1,21 +1,21 @@
 <template>
-    <div class="v27_210">
-                <span class="v27_211">Bedroom</span>
-                <span class="v27_212">Lights</span>
-                <div class="v27_213">
-                    <div class="v27_214"></div>
+    <div class="panelBlock">
+                <span class="roomName">{{roomName}}</span>
+                <span class="lights">Lights</span>
+                <div class="off" tabindex="1">
+                    <div class="v27_214" ></div>
                     <span class="v27_215">Off</span>
                 </div>
-                <div class="v27_216">
-                    <div class="v27_217"></div>
+                <div class="save"  tabindex="1">
+                    <div class="v27_217" ></div>
                     <span class="v27_218">Save</span>
                 </div>
-                <div class="v27_219">
-                    <div class="v27_220"></div>
+                <div class="manual" tabindex="1">
+                    <div class="v27_220"  ></div>
                     <span class="v27_221">Manual</span>
                 </div>
-                <div class="v27_222">
-                    <div class="v27_223"></div>
+                <div class="on" tabindex="1"> 
+                    <div class="v27_223" ></div>
                     <span class="v27_224">On</span>
                 </div>
             </div>
@@ -24,22 +24,157 @@
 <script>
 export default {
     name: "ControlPanel",
+    computed: {
+      roomName() {
+        return this.$store.state.activeRoom.name;
+      },
+    },
 }
 </script>
 
 <style>
-.v27_210 {
+.colorPalete{
+   background: rgba(232,237,223,1);
+   color: rgba(36,36,35,1);
+   background: rgba(175,175,175,1);
+
+}
+
+.on {
+  width: 140px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 55px;
+  left: 823px;
+  overflow: hidden;
+}
+
+.manual {
+  width: 140px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 55px;
+  left: 983px;
+  overflow: hidden;
+}
+
+.off {
+  width: 140px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 55px;
+  left: 1143px;
+  overflow: hidden;
+}
+
+.on, .manual, .off, .save {
+  width: 140px;
+  height: 40px;
+  background: rgba(175,175,175,1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Roboto;
+  font-size: 20px;
+  color: black;
+
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  /* overflow: hidden; */
+
+    /* Niezaznaczalny obiekt */
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+.on:hover, .manual:hover, .off:hover {
+ background-color: rgb(235, 235, 235);
+ box-sizing: border-box;
+ border: 1px orange solid;
+}
+
+.on:focus, .manual:focus, .off:focus {
+  outline:none;
+  box-sizing: border-box;
+ border: 1px black solid;
+  background-color: white;
+}
+
+.save {
+  background-color: black;
+  color: white;
+}
+
+.save:hover {
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+ border: 1px black solid;
+}
+
+.save:focus {
+  outline: none;
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+ border: 1px black solid;
+
+}
+
+
+/* .on >div:hover, .manual>div:hover, .off>div:hover{
+  background-color: orange;
+}
+
+.on>div:focus {
+  outline:none;
+  background-color: white;
+} */
+
+.save {
+  width: 140px;
+  height: 40px;
+  /* background: url("../images/save.png"); */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 55px;
+  left: 1323px;
+  overflow: hidden;
+}
+
+.panelBlock {
   width: 100%;
   height: 150px;
   background: rgba(232,237,223,1);
   opacity: 1;
-  position: absolute;
+  position: relative;
   top: 0px;
   left: 377px;
   overflow: hidden;
 }
-.v27_211 {
-  width: 139px;
+.roomName {
+  width: 600px;
   color: rgba(36,36,35,1);
   position: absolute;
   top: 55px;
@@ -50,7 +185,7 @@ export default {
   opacity: 1;
   text-align: left;
 }
-.v27_212 {
+.lights {
   width: 72px;
   color: rgba(0,0,0,1);
   position: absolute;
@@ -62,20 +197,8 @@ export default {
   opacity: 1;
   text-align: left;
 }
-.v27_213 {
-  width: 140px;
-  height: 40px;
-  /* background: url("../images/v27_213.png"); */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 55px;
-  left: 1143px;
-  overflow: hidden;
-}
-.v27_214 {
+
+/* .v27_214 {
   width: 140px;
   height: 40px;
   background: rgba(175,175,175,1);
@@ -101,19 +224,7 @@ export default {
   opacity: 1;
   text-align: left;
 }
-.v27_216 {
-  width: 140px;
-  height: 40px;
-  /* background: url("../images/v27_216.png"); */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 55px;
-  left: 1323px;
-  overflow: hidden;
-}
+
 .v27_217 {
   width: 140px;
   height: 40px;
@@ -140,19 +251,7 @@ export default {
   opacity: 1;
   text-align: left;
 }
-.v27_219 {
-  width: 140px;
-  height: 40px;
-  /* background: url("../images/v27_219.png"); */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 55px;
-  left: 983px;
-  overflow: hidden;
-}
+
 .v27_220 {
   width: 140px;
   height: 40px;
@@ -180,19 +279,7 @@ export default {
   opacity: 1;
   text-align: left;
 }
-.v27_222 {
-  width: 140px;
-  height: 40px;
-  /* background: url("../images/v27_222.png"); */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: 1;
-  position: absolute;
-  top: 55px;
-  left: 823px;
-  overflow: hidden;
-}
+
 .v27_223 {
   width: 140px;
   height: 40px;
@@ -218,5 +305,5 @@ export default {
   font-size: 18px;
   opacity: 1;
   text-align: left;
-}
+} */
 </style>

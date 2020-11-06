@@ -1,15 +1,14 @@
 <template>
     <div>
           <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
-
-            <div class="v27_196">
-                <SideMenu/>
-                <ControlPanel/>
-                <div class="v27_252">
+        <div class="v27_196">
+            <SideMenu/>
+            <ControlPanel/>
+            <div class="v27_252">
                 <LightSources/>
                 <Schedule/>
-                </div>
             </div>
+        </div>
     </div>   
 </template>
 
@@ -26,7 +25,7 @@ export default {
         ControlPanel,
         LightSources,
         Schedule,
-    }
+    },
 }
 </script>
 
@@ -36,30 +35,30 @@ export default {
   padding: 0px !important;
   margin: 0px !important;
 }
+
 .v27_196 {
   width: 100%;
-  height: 1080px;
+  min-height: 100% !important;
+  /* height: 100%; */
   background: rgba(255,255,255,1);
   opacity: 1;
   position: absolute;
   top: 0px;
   left: 0px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
-
 
 .v27_252 {
   width: 100%;
-  height: 930px;
+  height: 100%;
   /* background: url("../images/v27_252.png"); */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   opacity: 1;
-  position: absolute;
-  top: 160px;
-  left: 360px;
-  overflow: hidden;
+  position: relative;
+  left: 370px;
+  /* overflow: hidden; */
 }
 
 </style>
