@@ -1,5 +1,5 @@
 <template>
-  <div class="lightSourcesContainer">
+  <div :class="{ lightSourcesContainer: name, hidden: !name }">
     <p class="label">Light sources</p>
     <div class="results">
       <div
@@ -53,7 +53,7 @@ export default {
 .lightSourcesContainer {
   width: 80%;
   min-height: 50%;
-  padding: 4rem 0;
+  padding: 4.5rem 0;
   margin: 0 auto;
 }
 .lightSourceName {

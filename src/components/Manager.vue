@@ -10,6 +10,7 @@
     <div class="mainPanel">
       <ControlPanel />
       <LightSources />
+
       <Schedule />
     </div>
   </div>
@@ -22,6 +23,11 @@ import LightSources from "@/components/Manager/LightSources.vue";
 import Schedule from "@/components/Manager/Schedule.vue";
 
 export default {
+  computed: {
+    roomName() {
+      return this.$store.state.activeRoom.name;
+    },
+  },
   name: "Manager",
   components: {
     SideMenu,
@@ -42,13 +48,10 @@ export default {
 }
 .sidePanel {
   background-color: #333533;
-  border: 1px red solid;
 }
-
 .mainPanel {
   flex: 1;
   height: 100%;
-  border: 1px blue solid;
   display: flex;
   flex-direction: column;
 }

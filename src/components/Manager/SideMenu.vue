@@ -66,43 +66,43 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-.header {
+.sideMenu .header {
   padding: 2rem 2.5rem;
   font-size: 2rem;
   margin-bottom: 3rem;
 }
-.subheader {
+.sideMenu .subheader {
   padding: 2rem 2.5rem;
   font-size: 2rem;
 }
-.gradientLine {
+.sideMenu .gradientLine {
   width: 100%;
   height: 1px;
   background-color: pink;
 }
-.room {
+.sideMenu .room {
   width: 40%;
   font-size: 1.5rem;
   padding: 1rem 4rem;
 }
 
-.roomName:hover {
+.sideMenu .roomName:hover {
   color: #ffba08;
   font-weight: bold;
 }
-.addRoomButtonContainer {
+.sideMenu .addRoomButtonContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin: 2rem;
   font-size: 1.5rem;
 }
-.addRoomButton {
+.sideMenu .addRoomButton {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.addRoomButton:hover {
+.sideMenu .addRoomButton:hover {
   color: #ffba08;
   font-weight: bold;
 }
@@ -117,7 +117,7 @@ export default {
   padding: 0;
   background: transparent;
 }
-.addRoomText {
+.sideMenu .addRoomText {
   margin-left: 1rem;
 }
 </style>
