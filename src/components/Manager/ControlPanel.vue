@@ -14,7 +14,7 @@
         </div>
       </button>
       <button class="resetButton ">
-        <div class="buttonContainer onButton " tabindex="1">
+        <div class="buttonContainer offButton " tabindex="1">
           Off
         </div>
       </button>

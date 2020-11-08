@@ -77,8 +77,14 @@ export default {
 }
 .sideMenu .gradientLine {
   width: 100%;
-  height: 1px;
-  background-color: pink;
+  height: 3px;
+  margin-bottom: 0.5rem;
+  background: rgb(36, 36, 35);
+  background: linear-gradient(
+    90deg,
+    rgba(36, 36, 35, 1) 0%,
+    rgba(51, 53, 51, 1) 100%
+  );
 }
 .sideMenu .room {
   width: 40%;
