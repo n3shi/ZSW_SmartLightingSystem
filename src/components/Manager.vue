@@ -53,6 +53,7 @@ export default {
   flex: 1;
   height: 100%;
   display: flex;
+  background: #fff;
   flex-direction: column;
 }
 </style>

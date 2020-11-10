@@ -2,22 +2,32 @@
   <div class="scheduleContainer">
     <div class="scheduleContentContaier">
       <p class="label">Schedule</p>
-      <!-- 
-      TODO
-      Tutaj trzeba wstawić dynamicznie generowane komponenty -->
-      <p class="">Turn off all lights at 00:00</p>
-      <button class="resetButton">Cancel</button>
+      <!-- Miejsce na fora z generowaniem komponentów, póki co trzy na sztywno -->
+      <div class="scheduleEventsContainer">
+        <ScheduleEvent />
+        <ScheduleEvent />
+        <ScheduleEvent />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import ScheduleEvent from "./ScheduleEvent";
+
+export default { components: { ScheduleEvent } };
 </script>
 
 <style>
 .scheduleContainer {
   width: 100%;
+}
+.label {
+  width: 100%;
+}
+.scheduleEventsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .scheduleContentContaier {
   width: 80%;

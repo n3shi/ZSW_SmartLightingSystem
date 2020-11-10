@@ -47,9 +47,10 @@ export default {
   background: #e8eddf;
 
   /* Menu "przyklejone" do ekranu */
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
+
   /*-----------------------------------------*/
 }
 
@@ -79,9 +80,12 @@ export default {
   padding: 0.5rem;
 }
 .panelBlock .buttonContainer:hover {
-  border: 2px solid #ffba08;
+  /* border: 2px solid #ffba08; */
   background: #f6f6f6;
   filter: blur(0);
+  -webkit-box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
+  -moz-box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
+  box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
 }
 /* style dla przycisków aktywnych/nieaktwnych */
 .panelBlock .onButton {
@@ -99,7 +103,6 @@ export default {
 }
 /* ---------------------------------------------- */
 .panelBlock .saveButton:hover {
-  border: 2px solid #ffba08;
   background: #f6f6f6;
   color: #333533;
   filter: blur(0);

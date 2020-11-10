@@ -14,6 +14,7 @@
 import "vue-awesome/icons/lightbulb";
 import "vue-awesome/icons/sliders-h";
 import Icon from "vue-awesome/components/Icon";
+
 export default {
   components: {
     "v-icon": Icon,
@@ -59,10 +60,15 @@ export default {
   align-items: center;
   box-sizing: border-box;
   border-radius: 2em;
-  border: #333533 solid 1px;
+
+  -webkit-box-shadow: 4px 0px 10px 1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 4px 0px 10px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 0px 10px 1px rgba(0, 0, 0, 0.25);
 }
 .block:hover {
-  border: #ffba08 solid 1px;
+  -webkit-box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
+  -moz-box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
+  box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
 }
 .offBlock {
   background: #f8f8f8;
