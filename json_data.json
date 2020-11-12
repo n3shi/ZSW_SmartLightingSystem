@@ -11,15 +11,15 @@
          },
          {
             "relay":2,
-            "begin":"00:00",
-            "end":"23:59",
+            "begin":"12:01",
+            "end":"14:45",
             "func":"on",
             "funcArg":""
          },
          {
             "relay":3,
-            "begin":"00:00",
-            "end":"23:59",
+            "begin":"13:00",
+            "end":"22:59",
             "func":"on",
             "funcArg":""
          }
