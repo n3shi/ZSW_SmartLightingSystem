@@ -4,6 +4,11 @@
       <p class="roomName">{{ roomName }}</p>
       <!-- <p class="lights">Lights</p> -->
       <button class="resetButton">
+        <div class="buttonContainer offButton" tabindex="1" @click="getJSON">
+          get API JSON
+        </div>
+      </button>
+      <button class="resetButton">
         <div :class="['buttonContainer', getButtonStyle]" tabindex="1">
           On
         </div>
@@ -19,7 +24,7 @@
         </div>
       </button>
       <button class="resetButton">
-        <div class="buttonContainer saveButton " tabindex="1">
+        <div class="buttonContainer saveButton " tabindex="1" @click="sendJson">
           Save
         </div>
       </button>
@@ -55,9 +60,39 @@ export default {
       return this.darkMode ? "offButtonDarkMode" : "offButtonLightMode";
     },
   },
+
   methods: {
+    sendJson() {
+      console.log(this.jsonData);
+      var newJson = JSON.stringify(this.jsonData);
+      console.log(newJson);
+
+      //wyślij json
+    },
+
+    getJSON() {
+      //pobierz json z serwera
+      var stringJson = "{}";
+
+      stringJson =
+        '{"shedule":[{"idSchedule":1,"roomName":"nazwaPomieszczenia","lightName":"nazwaSwiatla","relay":1,"funcVal1":"wartoscFunkcji1","hour1":"godzinaFunkcji1","arg1":"wartosc1","boomerangChange":false,"funcTo2":"wartoscFunkcji2","hour2":"godzinaFunkcji2","arg2":"wartosc2"}],"manager":[{"name":"nazwaPomieszczenia","lightSources":[{"name":"nazwaSwiatla","relay":1,"begin":"00:00","end":"23:59","func":"off","funcArg":""}]}]}';
+
+      //skonwetuj go do obiektu
+      var newObject = JSON.parse(stringJson);
+
+      //zapisz do mainManager
+      this.$store.commit("setMainManager", newObject);
+      this.$store.commit("setRoomName", "");
+      this.$store.commit("setActive", false);
+      this.$store.commit("setChoosenBlock", undefined);
+      this.$store.commit("setLightSourceIndex", -1);
+    },
     toggleDarkMode() {
+      console.log("GHSGSDG");
       this.$store.commit("toggleDarkMode");
+    },
+    jsonData() {
+      return this.$store.getters.getJsonData;
     },
   },
 };

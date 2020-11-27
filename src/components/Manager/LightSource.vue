@@ -1,6 +1,10 @@
 <template>
-  <div :class="['block', getBlocksState, getStyleMode]">
-    <p class="lightSourceName">{{ lightSource.name }}</p>
+  <div
+    :class="['block', getBlocksState, getStyleMode, isActive]"
+    @click="setThisButton()"
+  >
+    <p class="lightSourceName">{{ this.lightSource.name }}</p>
+    >>>>>>> 96b0e7e418c9708321ac12972175409eef4100a7
     <v-icon
       name="lightbulb"
       scale="4.5"
@@ -19,7 +23,12 @@ export default {
   components: {
     "v-icon": Icon,
   },
-  props: ["lightSource"],
+  props: {
+    lightSource: Object,
+    index: { type: Number },
+  },
+
+  // ['lightSource', 'index'],
   name: "LightSource",
   computed: {
     getBlocksState() {
@@ -35,6 +44,60 @@ export default {
       return this.lightSource.func === "on"
         ? "lightSourceIconsOn"
         : "lightSourceIconsOff";
+    },
+
+    choosenBlock() {
+      return this.$store.state.choosenBlock;
+    },
+
+    vuexIndex() {
+      return this.$store.getters.getLightSourceIndex;
+    },
+
+    isActive2() {
+      return this.$store.getters.getActive;
+    },
+  },
+  watch: {
+    vuexIndex: function() {
+      if (this.vuexIndex != undefined) {
+        //console.log(this.vuexIndex + "   index: " + this.index);
+        if (this.vuexIndex == this.index) {
+          this.isActive = "isActive";
+        } else {
+          this.isActive = "";
+        }
+      } else this.isActive = "";
+    },
+  },
+  data: function() {
+    return {
+      isActive: "",
+    };
+  },
+  methods: {
+    setThisButton() {
+      //jesli relay != choosenBlock.relay
+      if (this.choosenBlock != undefined) {
+        if (this.index != this.vuexIndex) {
+          this.$store.commit("setChoosenBlock", this.lightSource);
+          //i wskaż na niego
+          this.$store.commit("setLightSourceIndex", this.index);
+          this.$store.commit("setActive", true);
+        } else {
+          //w przeciwnym wypadku po 2 nacisnieciu zresetuj index
+          this.$store.commit("setLightSourceIndex", -1);
+          this.$store.commit("setActive", false);
+        }
+      }
+      //w wprzeciwnym wypadku dodaj go i uzupelnij index
+      else {
+        this.$store.commit("setChoosenBlock", this.lightSource);
+        this.$store.commit("setLightSourceIndex", this.index);
+        this.$store.commit("setActive", true);
+      }
+
+      console.log(this.isActive2);
     },
   },
 };
@@ -82,5 +145,15 @@ export default {
   -webkit-box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
   -moz-box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
   box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
+}
+
+.offBlock {
+  /* smth */
+}
+
+.isActive {
+  -webkit-box-shadow: 4px 0px 10px 1px rgba(255, 230, 8, 0.753);
+  -moz-box-shadow: 4px 0px 10px 1px rgba(255, 230, 8, 0.753);
+  box-shadow: 4px 0px 10px 1px rgba(255, 230, 8, 0.753);
 }
 </style>

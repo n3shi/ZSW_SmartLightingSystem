@@ -37,20 +37,28 @@ export default {
     return {
       isActive: false,
       roomName: "",
-      manager: [],
+    //  manager: [],
       a: 0,
     };
   },
   methods: {
     updateName(name) {
-      this.isActive = !this.isActive;
-      this.roomName = name;
-      this.$store.commit("setRoomName", this.roomName);
+		this.isActive = !this.isActive;
+		this.roomName = name;
+		this.$store.commit("setRoomName", this.roomName);
+		this.$store.commit("setNewShedule", this.roomName);
+		this.$store.commit("setActive", false);
+		this.$store.commit('setLightSourceIndex',-1);
     },
   },
   mounted() {
-    this.manager = this.$store.getters.getCurrentOptions;
+    //this.manager = this.$store.getters.getCurrentOptions;
   },
+  computed: {
+	manager() {
+		return this.$store.getters.getCurrentOptions;
+	}
+  }
 };
 </script>
 

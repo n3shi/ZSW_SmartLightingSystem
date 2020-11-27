@@ -2,29 +2,34 @@
   <div :class="{ lightSourcesContainer: name, hidden: !name }">
     <p class="label">Light sources</p>
     <div class="results">
-      <div v-for="lightSource in manager.lightSources" :key="lightSource.relay">
-        <LightSource v-bind:lightSource="lightSource" />
+      <div v-for="(item,index) in manager.lightSources" :key="item.relay">
+        <LightSource :lightSource="item" :index="index" @get-choosen-block="getBlock($event)" />
         <!-- DODAJ TO POD FORA WYZEJ ZEBY ZAZNACZYC DANY DIV (W TEORII BO NIE DZIALA) -->
         <!-- @mouseleave="active = false"   v-on:mouseover="active = true"  -->
       </div>
     </div>
+	<LightDetail v-if="this.active"/>
+	<!--<LightDetail />-->
   </div>
 </template>
 
 <script>
 import LightSource from "./LightSource.vue";
+import LightDetail from "@/components/Manager/LightSourceDetail.vue";
 export default {
-  components: { LightSource },
-  name: "LightSources",
-  data: function() {
-    return {
-      active: false,
-    };
-  },
+	components: { 
+		LightSource,
+		LightDetail
+	},
+	name: "LightSources",
   methods: {
     mouseOver: function() {
       this.active = !this.active;
-    },
+	},
+	getBlock(val) {
+		console.log(val);
+		console.log(val.func);
+	}
   },
   computed: {
     name() {
@@ -33,7 +38,10 @@ export default {
     manager() {
       //return this.$store.getters['getRoom'](name);
       return this.$store.getters["getRoom"](this.name);
-    },
+	},
+	active() {
+		return this.$store.getters.getActive;
+	}
   },
 };
 </script>
