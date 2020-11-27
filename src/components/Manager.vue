@@ -7,12 +7,14 @@
     <div class="sidePanel">
       <SideMenu />
     </div>
-    <div class="mainPanel">
+    <div class="mainPanel" v-if="this.roomName != ''">
       <ControlPanel />
       <LightSources />
 
       <Schedule />
+	<!--<Panel v-if="this.active"/>-->
     </div>
+	<div class="newPanel" v-if="this.active == true"/>
   </div>
 </template>
 
@@ -21,19 +23,25 @@ import SideMenu from "@/components/Manager/SideMenu.vue";
 import ControlPanel from "@/components/Manager/ControlPanel.vue";
 import LightSources from "@/components/Manager/LightSources.vue";
 import Schedule from "@/components/Manager/Schedule.vue";
+//import Panel from "@/components/Manager/LightSourceDetail.vue";
 
 export default {
   computed: {
     roomName() {
       return this.$store.state.activeRoom.name;
-    },
+	},
+	
+	active() {
+		return this.$store.getters.getActive;
+	}
   },
   name: "Manager",
   components: {
     SideMenu,
     ControlPanel,
     LightSources,
-    Schedule,
+	Schedule,
+	//Panel,
   },
 };
 </script>
@@ -55,5 +63,9 @@ export default {
   display: flex;
   background: #fff;
   flex-direction: column;
+}
+
+.newPanel{
+	width:514px;
 }
 </style>

@@ -1,12 +1,21 @@
 <template>
   <div class="eventContainer">
     <p>Turn off all lights at 00:00</p>
+	<p>{{schedule.roomName}} </p>
     <button class="resetButton">Cancel</button>
   </div>
 </template>
 
 <script>
-export default { name: "ScheduleEvent" };
+export default { 
+	name: "ScheduleEvent",
+
+	props: {
+		schedule: Object,
+	},
+	
+	};
+
 </script>
 
 <style scoped>
