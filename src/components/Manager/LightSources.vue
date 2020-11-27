@@ -50,7 +50,6 @@ export default {
   grid-template-columns: 1fr 1fr 1fr;
 }
 .label {
-  color: rgba(36, 36, 35, 1);
   font-family: Roboto;
   font-weight: Regular;
   font-size: 2em;

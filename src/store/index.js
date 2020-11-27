@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    darkmode: false,
     activeRoom: {
       name: "",
     },
@@ -201,6 +202,9 @@ export default new Vuex.Store({
     },
     setRoomName(state, payload) {
       state.activeRoom.name = payload;
+    },
+    toggleDarkMode(state) {
+      state.darkmode = !state.darkmode;
     },
   },
   actions: {},

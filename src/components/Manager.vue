@@ -1,10 +1,15 @@
 <template>
-  <div class="window">
+  <div
+    class="window"
+    :class="{ windowDarkMode: darkmode, windowLightMode: !darkmode }"
+  >
     <link
       href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
       rel="stylesheet"
     />
-    <div class="sidePanel">
+    <div
+      :class="{ sidePanelDarkMode: darkmode, sidePanelLightMode: !darkmode }"
+    >
       <SideMenu />
     </div>
     <div class="mainPanel">
@@ -24,6 +29,9 @@ import Schedule from "@/components/Manager/Schedule.vue";
 
 export default {
   computed: {
+    darkmode() {
+      return this.$store.state.darkmode;
+    },
     roomName() {
       return this.$store.state.activeRoom.name;
     },
@@ -46,14 +54,27 @@ export default {
   padding: 0;
   display: flex;
 }
-.sidePanel {
+.sidePanelLightMode {
+  background-color: #333533;
+}
+.sidePanelDarkMode {
+  background: #1b1d1b;
+}
+.windowDarkMode {
+  background-color: #242624;
+  color: #fff;
+}
+.windowLightMode {
+  background: #fff;
+}
+.mainPanelDarkMode {
   background-color: #333533;
 }
 .mainPanel {
   flex: 1;
   height: 100%;
   display: flex;
-  background: #fff;
+
   flex-direction: column;
 }
 </style>

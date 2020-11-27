@@ -1,26 +1,34 @@
 <template>
-  <section :class="{ controlPanelContainer: roomName, hidden: !roomName }">
+  <section :class="[showPanel, getStyleMode]">
     <div class="panelBlock">
       <p class="roomName">{{ roomName }}</p>
       <!-- <p class="lights">Lights</p> -->
       <button class="resetButton">
-        <div class="buttonContainer offButton" tabindex="1">
+        <div :class="['buttonContainer', getButtonStyle]" tabindex="1">
           On
         </div>
       </button>
       <button class="resetButton">
-        <div class="buttonContainer offButton" tabindex="1">
+        <div :class="['buttonContainer', getButtonStyle]" tabindex="1">
           Manual
         </div>
       </button>
       <button class="resetButton ">
-        <div class="buttonContainer offButton " tabindex="1">
+        <div :class="['buttonContainer', getButtonStyle]" tabindex="1">
           Off
         </div>
       </button>
       <button class="resetButton">
         <div class="buttonContainer saveButton " tabindex="1">
           Save
+        </div>
+      </button>
+      <button class="resetButton emoji" @click="toggleDarkMode()">
+        <div v-if="darkMode" tabindex="1">
+          🌕
+        </div>
+        <div v-else tabindex="1">
+          ☀️
         </div>
       </button>
     </div>
@@ -31,8 +39,25 @@
 export default {
   name: "ControlPanel",
   computed: {
+    darkMode() {
+      return this.$store.state.darkmode;
+    },
     roomName() {
       return this.$store.state.activeRoom.name;
+    },
+    showPanel() {
+      return this.roomName ? "controlPanelContainer" : "hidden";
+    },
+    getStyleMode() {
+      return this.darkMode ? "controlPanelDarkMode" : "controlPanelLightMode";
+    },
+    getButtonStyle() {
+      return this.darkMode ? "offButtonDarkMode" : "offButtonLightMode";
+    },
+  },
+  methods: {
+    toggleDarkMode() {
+      this.$store.commit("toggleDarkMode");
     },
   },
 };
@@ -44,13 +69,11 @@ export default {
 }
 .controlPanelContainer {
   width: 100%;
-  background: #e8eddf;
 
   /* Menu "przyklejone" do ekranu */
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-
   /*-----------------------------------------*/
 }
 
@@ -79,26 +102,37 @@ export default {
   border-radius: 2rem;
   padding: 0.5rem;
 }
-.panelBlock .buttonContainer:hover {
-  /* border: 2px solid #ffba08; */
-  background: #f6f6f6;
-  filter: blur(0);
-  -webkit-box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
-  -moz-box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
-  box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
-}
 /* style dla przycisków aktywnych/nieaktwnych */
-.panelBlock .onButton {
+.panelBlock .onButtonLightMode {
   font-weight: bold;
   border: 2px solid #ffba08;
   background: #f6f6f6;
 }
-.panelBlock .offButton {
+.panelBlock .onButtonDarkMode {
+  font-weight: bold;
+  border: 2px solid #ffba08;
+  background: #f6f6f6;
+}
+.panelBlock .offButtonLightMode {
   background: #afafaf;
   filter: blur(0.5px);
 }
+.panelBlock .offButtonDarkMode {
+  background: #afafaf;
+  filter: blur(0.5px);
+}
+.panelBlock .offButtonDarkMode:hover {
+  background: #f6f6f6;
+  color: #333533;
+  filter: blur(0);
+}
+.panelBlock .offButtonLightMode:hover {
+  background: #f6f6f6;
+  color: #333533;
+  filter: blur(0);
+}
 .panelBlock .saveButton {
-  background: #333533;
+  background: #242624;
   color: #ffffff;
 }
 /* ---------------------------------------------- */
@@ -106,5 +140,14 @@ export default {
   background: #f6f6f6;
   color: #333533;
   filter: blur(0);
+}
+.controlPanelDarkMode {
+  background: #323131;
+}
+.controlPanelLightMode {
+  background: #e8eddf;
+}
+.emoji {
+  font-size: 1.5em;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div :class="['block', getBlocksState]">
+  <div :class="['block', getBlocksState, getStyleMode]">
     <p class="lightSourceName">{{ lightSource.name }}</p>
     <v-icon
       name="lightbulb"
@@ -25,6 +25,12 @@ export default {
     getBlocksState() {
       return this.lightSource.func === "on" ? "" : "offBlock";
     },
+    darkmode() {
+      return this.$store.state.darkmode;
+    },
+    getStyleMode() {
+      return this.darkmode ? "blockDarkMode" : "blockLightMode";
+    },
     getIconState() {
       return this.lightSource.func === "on"
         ? "lightSourceIconsOn"
@@ -43,10 +49,17 @@ export default {
   flex: 1;
 }
 .lightSourceIconsOff {
-  color: #333533;
+  color: #242624;
 }
 .lightSourceIconsOn {
   color: #ffba08;
+}
+.blockDarkMode {
+  color: #fff;
+  background: #333533;
+}
+.blockLightMode {
+  color: #333533;
 }
 .block {
   width: 15em;
@@ -69,8 +82,5 @@ export default {
   -webkit-box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
   -moz-box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
   box-shadow: 4px 0px 10px 1px rgba(255, 186, 8, 0.4);
-}
-.offBlock {
-  background: #f8f8f8;
 }
 </style>

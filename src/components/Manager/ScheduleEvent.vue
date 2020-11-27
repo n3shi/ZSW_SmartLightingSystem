@@ -1,12 +1,22 @@
 <template>
-  <div class="eventContainer">
+  <div :class="['eventContainer', getStyleMode]">
     <p>Turn off all lights at 00:00</p>
     <button class="resetButton">Cancel</button>
   </div>
 </template>
 
 <script>
-export default { name: "ScheduleEvent" };
+export default {
+  name: "ScheduleEvent",
+  computed: {
+    darkmode() {
+      return this.$store.state.darkmode;
+    },
+    getStyleMode() {
+      return this.darkmode ? "eventDarkMode" : "eventLightMode";
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -30,5 +40,12 @@ p {
 button {
   height: 2rem;
   color: #afafaf;
+}
+.eventDarkMode {
+  color: #fff;
+  background: #333533;
+}
+.eventLightMode {
+  color: #333533;
 }
 </style>
