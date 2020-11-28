@@ -6,7 +6,7 @@ let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 let process = require('process')
 
-process.env.PORT = 8050
+process.env.PORT = 1337
 
 let queries = require("./queries")
 let routes = require('./routes/index')(queries)
