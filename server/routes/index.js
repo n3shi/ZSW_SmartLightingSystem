@@ -3,7 +3,10 @@ var router = express.Router();
 module.exports = function(queries) {
   /* GET home page. */
   router.get('/', function (req, res) {
-    res.render('main');
+    let p = require('path').join(__dirname, '../views/index.html')
+    let f = require('fs').readFileSync(p)
+    console.log(p)
+    res.sendFile('/views/index.html');
   });
 
   return router;
