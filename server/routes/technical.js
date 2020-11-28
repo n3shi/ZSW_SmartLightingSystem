@@ -43,6 +43,18 @@ module.exports = function(queries) {
         }
     })
 
+    router.get('/getRpi/:key', async function (req, res) {
+        try {
+            let rpi = await queries.rpi.findConfigByKey(req.params)
+            res.send(rpi)
+        }catch (e) {
+            res.status(402)
+            res.render('error', {
+                message: "Blad wczytywania rpi",
+                error: e
+            });
+        }
+    })
 
     /* GET home page. */
     router.get('/createuser/:username/:password', async function(req, res) {
