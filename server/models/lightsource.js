@@ -11,13 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      LIGHTSOURCE.belongsTo(models.ROOM, {foreignKey: 'roomId', as: 'room'})
+      LIGHTSOURCE.belongsTo(models.RPI, {foreignKey: 'rpiId', as: 'rpi'})
     }
   };
   LIGHTSOURCE.init({
     name: DataTypes.STRING,
     relayNb: DataTypes.INTEGER,
     rpiId: DataTypes.INTEGER,
-    roomId: DataTypes.INTEGER
+    roomId: DataTypes.INTEGER,
+    begin: DataTypes.STRING,
+    end: DataTypes.STRING,
+    func: DataTypes.STRING,
+    arg: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'LIGHTSOURCE',

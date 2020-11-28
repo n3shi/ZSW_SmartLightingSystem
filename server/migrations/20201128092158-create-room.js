@@ -12,6 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       installationId: {
+        allowNull:false,
         type: Sequelize.INTEGER
       },
       createdAt: {

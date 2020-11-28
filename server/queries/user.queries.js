@@ -3,6 +3,14 @@ let helpers = require("./helpers")
 let db = require("../models")
 
 
+
+user.deleteAll = function () {
+    return db.USER.destroy({
+        where: {},
+        truncate: true
+    })
+}
+
 user.create = function ({username, password}) {
     return db.USER.create({
         email: username + "@gmail.com",

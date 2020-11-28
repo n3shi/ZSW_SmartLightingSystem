@@ -11,11 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      ROOM.belongsTo(models.INSTALLATION, {foreignKey: 'installationId', as: 'installation'})
+      ROOM.hasMany(models.LIGHTSOURCE, {foreignKey: 'roomId', as: 'lightSources'})
     }
   };
   ROOM.init({
     name: DataTypes.STRING,
-    instalationId: DataTypes.INTEGER
+    installationId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ROOM',

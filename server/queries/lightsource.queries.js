@@ -3,11 +3,19 @@ let helpers = require("./helpers")
 let db = require("../models")
 
 
-lightsource.create = function ({roomId, relayId, name}) {
+lightsource.deleteAll = function () {
+    return db.LIGHTSOURCE.destroy({
+        where: {},
+        truncate: true
+    })
+}
+
+lightsource.create = function ({roomId, relayNb, name, rpiId}) {
     return db.LIGHTSOURCE.create({
         name,
         roomId,
-        relayId
+        relayNb,
+        rpiId
     })
 }
 

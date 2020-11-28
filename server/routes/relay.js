@@ -1,6 +1,6 @@
 let express = require('express')
 let router = express.Router()
-
+let helpers = require('./helpers')
 module.exports = function(queries) {
 
     /**
@@ -61,7 +61,16 @@ module.exports = function(queries) {
     * body: instalationID
     */
     router.post('/config', function (req, res) {
-        res.render('index', {title: 'Express'});
+        try{
+            let config = helpers.checkQuery(req.body, ['id'])
+            let inst = queries.installation.findById(config)
+
+            let r = {manager: inst.rooms}
+            res.send(r)
+        }catch (e) {
+            res.status(402)
+            res.send(e)
+        }
     });
 
     /*
