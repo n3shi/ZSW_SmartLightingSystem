@@ -6,7 +6,7 @@ module.exports = function (queries) {
      * Bind port ale listen for connections
      */
     const connect = function () {
-        wss = new WebSocket.Server({port: 5000});
+        wss = new WebSocket.Server({port: 1337});
 
         wss.on('connection', function connection(ws, req) {
             _onSocketConnect(ws, req)
