@@ -13,17 +13,22 @@
       <SideMenu />
     </div>
     <div class="mainPanel" v-if="this.roomName != ''">
-      <ControlPanel />
-      <LightSources />
+      <div class="test"><ControlPanel /></div>
+      <div class="row">
+        <div class="column">
+          <LightSources />
+          <Schedule />
+        </div>
+        <LightDetail v-if="this.active" />
+      </div>
 
-      <Schedule />
-	<!--<Panel v-if="this.active"/>-->
+      <!--<Panel v-if="this.active"/>-->
     </div>
-	<div class="newPanel" v-if="this.active == true"/>
   </div>
 </template>
 
 <script>
+import LightDetail from "@/components/Manager/LightSourceDetail.vue";
 import SideMenu from "@/components/Manager/SideMenu.vue";
 import ControlPanel from "@/components/Manager/ControlPanel.vue";
 import LightSources from "@/components/Manager/LightSources.vue";
@@ -37,24 +42,40 @@ export default {
     },
     roomName() {
       return this.$store.state.activeRoom.name;
-	},
-	
-	active() {
-		return this.$store.getters.getActive;
-	}
+    },
+
+    active() {
+      return this.$store.getters.getActive;
+    },
   },
   name: "Manager",
   components: {
     SideMenu,
     ControlPanel,
     LightSources,
-	Schedule,
-	//Panel,
+    Schedule,
+    LightDetail,
+    //Panel,
   },
 };
 </script>
 
 <style>
+.row {
+  display: flex;
+  flex: 1;
+}
+.column {
+  flex: 1;
+}
+.test {
+  /* Menu "przyklejone" do ekranu */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  /*-----------------------------------------*/
+}
 .window {
   width: 100%;
   min-height: 100vh;
@@ -80,13 +101,8 @@ export default {
 }
 .mainPanel {
   flex: 1;
-  height: 100%;
   display: flex;
-
+  position: relative;
   flex-direction: column;
-}
-
-.newPanel{
-	width:514px;
 }
 </style>

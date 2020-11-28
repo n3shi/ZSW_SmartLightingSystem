@@ -4,7 +4,6 @@
     @click="setThisButton()"
   >
     <p class="lightSourceName">{{ this.lightSource.name }}</p>
-    >>>>>>> 96b0e7e418c9708321ac12972175409eef4100a7
     <v-icon
       name="lightbulb"
       scale="4.5"

@@ -299,5 +299,6 @@ export default new Vuex.Store({
     getActive: (state) => state.active,
     getChoosenBlock: (state) => state.choosenBlock,
     getJsonData: (state) => state.mainManager,
+    getDarkMode: (state) => state.darkmode,
   },
 });

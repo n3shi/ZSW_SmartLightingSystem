@@ -88,7 +88,6 @@ export default {
       this.$store.commit("setLightSourceIndex", -1);
     },
     toggleDarkMode() {
-      console.log("GHSGSDG");
       this.$store.commit("toggleDarkMode");
     },
     jsonData() {
@@ -104,12 +103,6 @@ export default {
 }
 .controlPanelContainer {
   width: 100%;
-
-  /* Menu "przyklejone" do ekranu */
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  /*-----------------------------------------*/
 }
 
 .panelBlock {
@@ -129,7 +122,7 @@ export default {
 .panelBlock .lights {
   font-size: 1.5rem;
 }
-.panelBlock .buttonContainer {
+.buttonContainer {
   width: 7rem;
   text-align: center;
   box-sizing: border-box;
@@ -138,30 +131,34 @@ export default {
   padding: 0.5rem;
 }
 /* style dla przycisków aktywnych/nieaktwnych */
-.panelBlock .onButtonLightMode {
+.onButtonLightMode {
+  color: #242624;
   font-weight: bold;
   border: 2px solid #ffba08;
   background: #f6f6f6;
 }
-.panelBlock .onButtonDarkMode {
+.onButtonDarkMode {
+  color: #242624;
   font-weight: bold;
   border: 2px solid #ffba08;
   background: #f6f6f6;
 }
-.panelBlock .offButtonLightMode {
+.offButtonLightMode {
+  color: #242624;
   background: #afafaf;
   filter: blur(0.5px);
 }
-.panelBlock .offButtonDarkMode {
+.offButtonDarkMode {
+  color: #242624;
   background: #afafaf;
   filter: blur(0.5px);
 }
-.panelBlock .offButtonDarkMode:hover {
+.offButtonDarkMode:hover {
   background: #f6f6f6;
   color: #333533;
   filter: blur(0);
 }
-.panelBlock .offButtonLightMode:hover {
+.offButtonLightMode:hover {
   background: #f6f6f6;
   color: #333533;
   filter: blur(0);
