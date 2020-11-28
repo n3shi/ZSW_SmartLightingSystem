@@ -3,6 +3,7 @@
     "username": "pparczyk_zsw",
     "password": "k24B[k1@]F#F13@",
     "database": "pparczyk_zsw",
+    "define": { "freezeTableName": true },
     "host": "dev.aplipage.pl",
     "dialect": "mysql"
   },
