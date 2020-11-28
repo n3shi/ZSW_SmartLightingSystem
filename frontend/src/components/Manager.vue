@@ -33,11 +33,11 @@ import SideMenu from "@/components/Manager/SideMenu.vue";
 import ControlPanel from "@/components/Manager/ControlPanel.vue";
 import LightSources from "@/components/Manager/LightSources.vue";
 import Schedule from "@/components/Manager/Schedule.vue";
-import axios from 'axios';
+import axios from "axios";
 //import Panel from "@/components/Manager/LightSourceDetail.vue";
 
 export default {
-	name: "Manager",
+  name: "Manager",
   computed: {
     darkmode() {
       return this.$store.state.darkmode;
@@ -50,20 +50,23 @@ export default {
       return this.$store.getters.getActive;
     },
   },
-    created() {
-		this.load();
+  created() {
+    this.load();
   },
 
   methods: {
-	load(){
-				axios.get("/technical/getInstallation/1").then(m=>{
-					this.$store.commit('getCurrentOptions',m.data);
-				}).catch(e => {
-					console.error(e)
-				})
-			},
+    load() {
+      axios
+        .get("/technical/getInstallation/1")
+        .then((m) => {
+          this.$store.commit("getCurrentOptions", m.data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
   },
- 
+
   components: {
     SideMenu,
     ControlPanel,
