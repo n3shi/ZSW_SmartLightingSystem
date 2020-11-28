@@ -2,34 +2,37 @@
   <div :class="{ lightSourcesContainer: name, hidden: !name }">
     <p class="label">Light sources</p>
     <div class="results">
-      <div v-for="(item,index) in manager.lightSources" :key="item.relay">
-        <LightSource :lightSource="item" :index="index" @get-choosen-block="getBlock($event)" />
+      <div v-for="(item, index) in manager.lightSources" :key="item.relay">
+        <LightSource
+          :lightSource="item"
+          :index="index"
+          @get-choosen-block="getBlock($event)"
+        />
         <!-- DODAJ TO POD FORA WYZEJ ZEBY ZAZNACZYC DANY DIV (W TEORII BO NIE DZIALA) -->
         <!-- @mouseleave="active = false"   v-on:mouseover="active = true"  -->
       </div>
     </div>
-	<LightDetail v-if="this.active"/>
-	<!--<LightDetail />-->
+
+    <!--<LightDetail />-->
   </div>
 </template>
 
 <script>
 import LightSource from "./LightSource.vue";
-import LightDetail from "@/components/Manager/LightSourceDetail.vue";
+
 export default {
-	components: { 
-		LightSource,
-		LightDetail
-	},
-	name: "LightSources",
+  components: {
+    LightSource,
+  },
+  name: "LightSources",
   methods: {
     mouseOver: function() {
       this.active = !this.active;
-	},
-	getBlock(val) {
-		console.log(val);
-		console.log(val.func);
-	}
+    },
+    getBlock(val) {
+      console.log(val);
+      console.log(val.func);
+    },
   },
   computed: {
     name() {
@@ -38,10 +41,10 @@ export default {
     manager() {
       //return this.$store.getters['getRoom'](name);
       return this.$store.getters["getRoom"](this.name);
-	},
-	active() {
-		return this.$store.getters.getActive;
-	}
+    },
+    active() {
+      return this.$store.getters.getActive;
+    },
   },
 };
 </script>
@@ -58,7 +61,6 @@ export default {
   grid-template-columns: 1fr 1fr 1fr;
 }
 .label {
-  color: rgba(36, 36, 35, 1);
   font-family: Roboto;
   font-weight: Regular;
   font-size: 2em;

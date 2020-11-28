@@ -1,31 +1,39 @@
 <template>
-  <section :class="{ controlPanelContainer: roomName, hidden: !roomName }">
+  <section :class="[showPanel, getStyleMode]">
     <div class="panelBlock">
       <p class="roomName">{{ roomName }}</p>
       <!-- <p class="lights">Lights</p> -->
-		<button class="resetButton">
+      <button class="resetButton">
         <div class="buttonContainer offButton" tabindex="1" @click="getJSON">
-		get API JSON
+          get API JSON
         </div>
       </button>
       <button class="resetButton">
-        <div class="buttonContainer offButton" tabindex="1">
+        <div :class="['buttonContainer', getButtonStyle]" tabindex="1">
           On
         </div>
       </button>
       <button class="resetButton">
-        <div class="buttonContainer offButton" tabindex="1">
+        <div :class="['buttonContainer', getButtonStyle]" tabindex="1">
           Manual
         </div>
       </button>
       <button class="resetButton ">
-        <div class="buttonContainer offButton " tabindex="1">
+        <div :class="['buttonContainer', getButtonStyle]" tabindex="1">
           Off
         </div>
       </button>
       <button class="resetButton">
         <div class="buttonContainer saveButton " tabindex="1" @click="sendJson">
           Save
+        </div>
+      </button>
+      <button class="resetButton emoji" @click="toggleDarkMode()">
+        <div v-if="darkMode" tabindex="1">
+          🌕
+        </div>
+        <div v-else tabindex="1">
+          ☀️
         </div>
       </button>
     </div>
@@ -38,13 +46,23 @@ import axios from 'axios'
 export default {
   name: "ControlPanel",
   computed: {
+    darkMode() {
+      return this.$store.state.darkmode;
+    },
     roomName() {
       return this.$store.state.activeRoom.name;
-	},
-	jsonData() {
-		return this.$store.getters.getJsonData;
-	}
+    },
+    showPanel() {
+      return this.roomName ? "controlPanelContainer" : "hidden";
+    },
+    getStyleMode() {
+      return this.darkMode ? "controlPanelDarkMode" : "controlPanelLightMode";
+    },
+    getButtonStyle() {
+      return this.darkMode ? "offButtonDarkMode" : "offButtonLightMode";
+    },
   },
+
 	mounted: function() {
 		this.load()
 	},
@@ -73,24 +91,31 @@ export default {
 			})
 		},
 
-		getJSON(){
-			//pobierz json z serwera
-			var stringJson = '{}';
 
-			//test
-			stringJson = '{"shedule":[{"idSchedule":1,"roomName":"nazwaPomieszczenia","lightName":"nazwaSwiatla","relay":1,"funcVal1":"wartoscFunkcji1","hour1":"godzinaFunkcji1","arg1":"wartosc1","boomerangChange":false,"funcTo2":"wartoscFunkcji2","hour2":"godzinaFunkcji2","arg2":"wartosc2"}],"manager":[{"name":"nazwaPomieszczenia","lightSources":[{"name":"nazwaSwiatla","relay":1,"begin":"00:00","end":"23:59","func":"off","funcArg":""}]}]}';
+    getJSON() {
+		//pobierz json z serwera
+		var stringJson = "{}";
 
-			//skonwetuj go do obiektu
-			var newObject = JSON.parse(stringJson);
+		//test
+		stringJson = '{"shedule":[{"idSchedule":1,"roomName":"nazwaPomieszczenia","lightName":"nazwaSwiatla","relay":1,"funcVal1":"wartoscFunkcji1","hour1":"godzinaFunkcji1","arg1":"wartosc1","boomerangChange":false,"funcTo2":"wartoscFunkcji2","hour2":"godzinaFunkcji2","arg2":"wartosc2"}],"manager":[{"name":"nazwaPomieszczenia","lightSources":[{"name":"nazwaSwiatla","relay":1,"begin":"00:00","end":"23:59","func":"off","funcArg":""}]}]}';
 
-			//zapisz do mainManager
-			this.$store.commit('setMainManager',newObject);
-			this.$store.commit('setRoomName','');
-			this.$store.commit('setActive',false);
-			this.$store.commit('setChoosenBlock',undefined);
-			this.$store.commit('setLightSourceIndex',-1);
-		}
-  }
+      //skonwetuj go do obiektu
+      var newObject = JSON.parse(stringJson);
+
+      //zapisz do mainManager
+      this.$store.commit("setMainManager", newObject);
+      this.$store.commit("setRoomName", "");
+      this.$store.commit("setActive", false);
+      this.$store.commit("setChoosenBlock", undefined);
+      this.$store.commit("setLightSourceIndex", -1);
+    },
+    toggleDarkMode() {
+      this.$store.commit("toggleDarkMode");
+    },
+    jsonData() {
+      return this.$store.getters.getJsonData;
+    },
+  },
 };
 </script>
 
@@ -100,14 +125,6 @@ export default {
 }
 .controlPanelContainer {
   width: 100%;
-  background: #e8eddf;
-
-  /* Menu "przyklejone" do ekranu */
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-
-  /*-----------------------------------------*/
 }
 
 .panelBlock {
@@ -127,7 +144,7 @@ export default {
 .panelBlock .lights {
   font-size: 1.5rem;
 }
-.panelBlock .buttonContainer {
+.buttonContainer {
   width: 7rem;
   text-align: center;
   box-sizing: border-box;
@@ -135,26 +152,41 @@ export default {
   border-radius: 2rem;
   padding: 0.5rem;
 }
-.panelBlock .buttonContainer:hover {
-  /* border: 2px solid #ffba08; */
-  background: #f6f6f6;
-  filter: blur(0);
-  -webkit-box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
-  -moz-box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
-  box-shadow: 4px 0px 5px 1px rgba(255, 186, 8, 0.4);
-}
 /* style dla przycisków aktywnych/nieaktwnych */
-.panelBlock .onButton {
+.onButtonLightMode {
+  color: #242624;
   font-weight: bold;
   border: 2px solid #ffba08;
   background: #f6f6f6;
 }
-.panelBlock .offButton {
+.onButtonDarkMode {
+  color: #242624;
+  font-weight: bold;
+  border: 2px solid #ffba08;
+  background: #f6f6f6;
+}
+.offButtonLightMode {
+  color: #242624;
   background: #afafaf;
   filter: blur(0.5px);
 }
+.offButtonDarkMode {
+  color: #242624;
+  background: #afafaf;
+  filter: blur(0.5px);
+}
+.offButtonDarkMode:hover {
+  background: #f6f6f6;
+  color: #333533;
+  filter: blur(0);
+}
+.offButtonLightMode:hover {
+  background: #f6f6f6;
+  color: #333533;
+  filter: blur(0);
+}
 .panelBlock .saveButton {
-  background: #333533;
+  background: #242624;
   color: #ffffff;
 }
 /* ---------------------------------------------- */
@@ -162,5 +194,14 @@ export default {
   background: #f6f6f6;
   color: #333533;
   filter: blur(0);
+}
+.controlPanelDarkMode {
+  background: #323131;
+}
+.controlPanelLightMode {
+  background: #e8eddf;
+}
+.emoji {
+  font-size: 1.5em;
 }
 </style>

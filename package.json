@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-awesome": "^4.1.0",
+    "vue-slider-component": "^3.2.11",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
