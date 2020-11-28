@@ -23,9 +23,11 @@ import SideMenu from "@/components/Manager/SideMenu.vue";
 import ControlPanel from "@/components/Manager/ControlPanel.vue";
 import LightSources from "@/components/Manager/LightSources.vue";
 import Schedule from "@/components/Manager/Schedule.vue";
+import axios from 'axios';
 //import Panel from "@/components/Manager/LightSourceDetail.vue";
 
 export default {
+	name: "Manager",
   computed: {
     roomName() {
       return this.$store.state.activeRoom.name;
@@ -35,7 +37,20 @@ export default {
 		return this.$store.getters.getActive;
 	}
   },
-  name: "Manager",
+    created() {
+		this.load();
+  },
+
+  methods: {
+	load(){
+				axios.get("/technical/getInstallation/1").then(m=>{
+					this.$store.commit('getCurrentOptions',m.data);
+				}).catch(e => {
+					console.error(e)
+				})
+			},
+  },
+ 
   components: {
     SideMenu,
     ControlPanel,

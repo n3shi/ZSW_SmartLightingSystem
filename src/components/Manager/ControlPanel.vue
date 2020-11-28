@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "ControlPanel",
   computed: {
@@ -43,19 +45,39 @@ export default {
 		return this.$store.getters.getJsonData;
 	}
   },
+	mounted: function() {
+		this.load()
+	},
+
   methods: {
+	load(){
+			axios.get("/technical/getInstallation/1").then(m=>{
+				console.log(m.data)
+			}).catch(e => {
+				console.error(e)
+			})
+		},
+
 		sendJson() {
 			console.log(this.jsonData);
 			var newJson = JSON.stringify(this.jsonData);
 			console.log(newJson);
-
+			
+			//var url = ""
 			//wyślij json
+			let token = undefined;
+			axios.post("/setConfig", {...this.jsonData, token}).then(m => {console.log(m);
+			}).catch(e => {
+				//401 brak dostepu
+				console.log(e);
+			})
 		},
 
 		getJSON(){
 			//pobierz json z serwera
 			var stringJson = '{}';
 
+			//test
 			stringJson = '{"shedule":[{"idSchedule":1,"roomName":"nazwaPomieszczenia","lightName":"nazwaSwiatla","relay":1,"funcVal1":"wartoscFunkcji1","hour1":"godzinaFunkcji1","arg1":"wartosc1","boomerangChange":false,"funcTo2":"wartoscFunkcji2","hour2":"godzinaFunkcji2","arg2":"wartosc2"}],"manager":[{"name":"nazwaPomieszczenia","lightSources":[{"name":"nazwaSwiatla","relay":1,"begin":"00:00","end":"23:59","func":"off","funcArg":""}]}]}';
 
 			//skonwetuj go do obiektu

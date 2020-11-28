@@ -11,235 +11,235 @@ export default new Vuex.Store({
 
 	mainManager: {
 
-		shedule:[
-			{
-				idSchedule:1, 					// idSchedule <- musi byc bo nie mam pod co for przypisac...
-				roomName:'nazwaPomieszczenia', // nazwaPomieszczenia
-				lightName:'nazwaSwiatla',	   // nazwa swiatla
-				relay: 1,					   // numer przelacznika 
-				funcVal1:'wartoscFunkcji1',    // nazwaFunkcji (ON, OFF, <, >)
-				hour1:'godzinaFunkcji1',		// godzina w ktorej ma sie zmienic 
-				arg1:'wartosc1',			   // wartosc jesli np > to nowa wartosc mocy etc.
-				boomerangChange:false,			// jak true to znaczy ze wywolanie jest cykliczne
-												// jak false to masz to w dupie
-				funcTo2:'wartoscFunkcji2',		// nazwa funkcji (przeciwna do wartoscFunkcji w sumie)
-				hour2:'godzinaFunkcji2',		// godzina w ktorej ma wrocic do poprzedniego 
-				arg2: 'wartosc2'				// wartosc funkcji, np jesli > to dla arg2:70 to wartosc mocy
-			},
-			{
-				idSchedule:2, 					// idSchedule <- musi byc bo nie mam pod co for przypisac...
-				roomName:'Bedroom', // nazwaPomieszczenia
-				lightName:'nazwaSwiatla',	   // nazwa swiatla
-				relay: 1,					   // numer przelacznika 
-				funcVal1:'wartoscFunkcji1',    // nazwaFunkcji (ON, OFF, <, >)
-				hour1:'godzinaFunkcji1',		// godzina w ktorej ma sie zmienic 
-				arg1:'wartosc1',			   // wartosc jesli np > to nowa wartosc mocy etc.
-				boomerangChange:false,			// jak true to znaczy ze wywolanie jest cykliczne
-												// jak false to masz to w dupie
-				funcTo2:'wartoscFunkcji2',		// nazwa funkcji (przeciwna do wartoscFunkcji w sumie)
-				hour2:'godzinaFunkcji2',		// godzina w ktorej ma wrocic do poprzedniego 
-				arg2: 'wartosc2'				// wartosc funkcji, np jesli > to dla arg2:70 to wartosc mocy
-			},
-			{
-				idSchedule:3, 					// idSchedule <- musi byc bo nie mam pod co for przypisac...
-				roomName:'Bedroom', // nazwaPomieszczenia
-				lightName:'nazwaSwiatla',	   // nazwa swiatla
-				relay: 1,					   // numer przelacznika 
-				funcVal1:'wartoscFunkcji1',    // nazwaFunkcji (ON, OFF, <, >)
-				hour1:'godzinaFunkcji1',		// godzina w ktorej ma sie zmienic 
-				arg1:'wartosc1',			   // wartosc jesli np > to nowa wartosc mocy etc.
-				boomerangChange:false,			// jak true to znaczy ze wywolanie jest cykliczne
-												// jak false to masz to w dupie
-				funcTo2:'wartoscFunkcji2',		// nazwa funkcji (przeciwna do wartoscFunkcji w sumie)
-				hour2:'godzinaFunkcji2',		// godzina w ktorej ma wrocic do poprzedniego 
-				arg2: 'wartosc2'				// wartosc funkcji, np jesli > to dla arg2:70 to wartosc mocy
-			}
-		],
-		manager: [
-		{
-			name: "Bedroom",
-			lightSources: [
-			{
-				name: "Test",
-				relay: 1,
-				begin: "00:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 2,
-				begin: "00:00",
-				end: "23:59",
-				func: "on",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 3,
-				begin: "00:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			],
-		},
-		{
-			name: "Kitchen",
-			lightSources: [
-			{
-				name: "Night Light",
-				relay: 1,
-				begin: "00:00",
-				end: "23:59",
-				func: "on",
-				funcArg: "",
-			},
-			{
-				name: "Test",
-				relay: 2,
-				begin: "00:00",
-				end: "23:59",
-				func: "on",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 3,
-				begin: "00:00",
-				end: "23:59",
-				func: "on",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 4,
-				begin: "00:00",
-				end: "23:59",
-				func: "on",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 5,
-				begin: "00:00",
-				end: "23:59",
-				func: "on",
-				funcArg: "",
-			},
-			],
-		},
-		{
-			name: "Bathroom",
-			lightSources: [
-			{
-				name: "Night Light",
-				relay: 1,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 2,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 3,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 4,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 5,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 6,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 7,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Night Light",
-				relay: 8,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Test",
-				relay: 9,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Test",
-				relay: 10,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Test",
-				relay: 11,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Test",
-				relay: 12,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			{
-				name: "Test",
-				relay: 13,
-				begin: "12:00",
-				end: "23:59",
-				func: "off",
-				funcArg: "",
-			},
-			],
-		},
-		],
+		//shedule:[
+		//	{
+		//		idSchedule:1, 					// idSchedule <- musi byc bo nie mam pod co for przypisac...
+		//		roomName:'nazwaPomieszczenia', // nazwaPomieszczenia
+		//		lightName:'nazwaSwiatla',	   // nazwa swiatla
+		//		relay: 1,					   // numer przelacznika 
+		//		funcVal1:'wartoscFunkcji1',    // nazwaFunkcji (ON, OFF, <, >)
+		//		hour1:'godzinaFunkcji1',		// godzina w ktorej ma sie zmienic 
+		//		arg1:'wartosc1',			   // wartosc jesli np > to nowa wartosc mocy etc.
+		//		boomerangChange:false,			// jak true to znaczy ze wywolanie jest cykliczne
+		//										// jak false to masz to w dupie
+		//		funcTo2:'wartoscFunkcji2',		// nazwa funkcji (przeciwna do wartoscFunkcji w sumie)
+		//		hour2:'godzinaFunkcji2',		// godzina w ktorej ma wrocic do poprzedniego 
+		//		arg2: 'wartosc2'				// wartosc funkcji, np jesli > to dla arg2:70 to wartosc mocy
+		//	},
+		//	{
+		//		idSchedule:2, 					// idSchedule <- musi byc bo nie mam pod co for przypisac...
+		//		roomName:'Bedroom', // nazwaPomieszczenia
+		//		lightName:'nazwaSwiatla',	   // nazwa swiatla
+		//		relay: 1,					   // numer przelacznika 
+		//		funcVal1:'wartoscFunkcji1',    // nazwaFunkcji (ON, OFF, <, >)
+		//		hour1:'godzinaFunkcji1',		// godzina w ktorej ma sie zmienic 
+		//		arg1:'wartosc1',			   // wartosc jesli np > to nowa wartosc mocy etc.
+		//		boomerangChange:false,			// jak true to znaczy ze wywolanie jest cykliczne
+		//										// jak false to masz to w dupie
+		//		funcTo2:'wartoscFunkcji2',		// nazwa funkcji (przeciwna do wartoscFunkcji w sumie)
+		//		hour2:'godzinaFunkcji2',		// godzina w ktorej ma wrocic do poprzedniego 
+		//		arg2: 'wartosc2'				// wartosc funkcji, np jesli > to dla arg2:70 to wartosc mocy
+		//	},
+		//	{
+		//		idSchedule:3, 					// idSchedule <- musi byc bo nie mam pod co for przypisac...
+		//		roomName:'Bedroom', // nazwaPomieszczenia
+		//		lightName:'nazwaSwiatla',	   // nazwa swiatla
+		//		relay: 1,					   // numer przelacznika 
+		//		funcVal1:'wartoscFunkcji1',    // nazwaFunkcji (ON, OFF, <, >)
+		//		hour1:'godzinaFunkcji1',		// godzina w ktorej ma sie zmienic 
+		//		arg1:'wartosc1',			   // wartosc jesli np > to nowa wartosc mocy etc.
+		//		boomerangChange:false,			// jak true to znaczy ze wywolanie jest cykliczne
+		//										// jak false to masz to w dupie
+		//		funcTo2:'wartoscFunkcji2',		// nazwa funkcji (przeciwna do wartoscFunkcji w sumie)
+		//		hour2:'godzinaFunkcji2',		// godzina w ktorej ma wrocic do poprzedniego 
+		//		arg2: 'wartosc2'				// wartosc funkcji, np jesli > to dla arg2:70 to wartosc mocy
+		//	}
+		//],
+		//manager: [
+		//{
+		//	name: "Bedroom",
+		//	lightSources: [
+		//	{
+		//		name: "Test",
+		//		relay: 1,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 2,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "on",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 3,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	],
+		//},
+		//{
+		//	name: "Kitchen",
+		//	lightSources: [
+		//	{
+		//		name: "Night Light",
+		//		relay: 1,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "on",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Test",
+		//		relay: 2,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "on",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 3,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "on",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 4,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "on",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 5,
+		//		begin: "00:00",
+		//		end: "23:59",
+		//		func: "on",
+		//		funcArg: "",
+		//	},
+		//	],
+		//},
+		//{
+		//	name: "Bathroom",
+		//	lightSources: [
+		//	{
+		//		name: "Night Light",
+		//		relay: 1,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 2,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 3,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 4,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 5,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 6,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 7,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Night Light",
+		//		relay: 8,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Test",
+		//		relay: 9,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Test",
+		//		relay: 10,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Test",
+		//		relay: 11,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Test",
+		//		relay: 12,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	{
+		//		name: "Test",
+		//		relay: 13,
+		//		begin: "12:00",
+		//		end: "23:59",
+		//		func: "off",
+		//		funcArg: "",
+		//	},
+		//	],
+		//},
+		//],
 	},
 
 	newShedule: [],    				//nowa tablica harmonogramow dla wybranego pokoju
