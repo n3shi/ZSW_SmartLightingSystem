@@ -4,10 +4,15 @@
 
 # importing datetime module for now()
 import datetime
-import time
+import time, threading
 
 # using now() to get current time
 current_time = datetime.datetime.now()
+print ("Minutes time : ")
+current_time_min = current_time.hour*60 + current_time.minute
+print(current_time_min)
+
+
 
 # Printing value of now.
 print ("Time now at greenwich meridian is : "
@@ -64,43 +69,52 @@ print('Total difference in minutes: ', minutes[0], 'minutes',
                                  minutes[1], 'seconds')
 
 
-begin = 3
-end = 5
-current = 0
-var1 = False
-
-while True:
-
-
-
-
-
-    if (current>=begin):
-        var1 = True
-
-    if (current >= end):
-        var1 = False
-
-    print('T: % d Var1: % d'% (current, var1))
-
-    if current >= 1439:
-        current = 0
-    else:
-        current += 1
-
-    time.sleep(0.003)
-
-
-
-
-
-
-
-
-
-
-
+#begin = 3
+#end = 5
+#current = 0
+#var1 = False
+#
+#while True:
+#
+#
+#
+#
+#
+#    if (current>=begin):
+#        var1 = True
+#
+#    if (current >= end):
+#        var1 = False
+#
+#    print('T: % d Var1: % d'% (current, var1))
+#
+#    if current >= 1439:
+#        current = 0
+#    else:
+#        current += 1
+#
+#    time.sleep(0.003)
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 
 
 
 #
+
+
+WAIT_SECONDS = 1
+
+def foo():
+    print(time.ctime())
+    threading.Timer(WAIT_SECONDS, foo).start()
+    
+foo()

@@ -50,7 +50,8 @@ relay3 = False
 while True:
 
 
-
+    current_ = datetime.datetime.now()
+    current = current_.hour*60 + current_.minute
 
 
     if (current>=begin1):
@@ -70,13 +71,13 @@ while True:
 
     print('T: %5d | Relay1: % d | Relay2: % d | Relay3: % d'% (current, relay1, relay2, relay3))
 
-    if current >= 1439:
-        current = 0
-        break
-    else:
-        current += 1
+#    if current >= 1439:
+#        current = 0
+##        break
+#    else:
+#        current += 1
 
-    time.sleep(0.001)
+    time.sleep(10)
 
 
 
