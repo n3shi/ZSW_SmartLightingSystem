@@ -15,7 +15,6 @@ ChannelState = [1, 1, 1] # relay channels stete
 GPIO.setwarnings(False) # warn logs off
 GPIO.setmode(GPIO.BCM)  # BCM pin mapping mode
 
-
 for i in range(3):
     GPIO.setup(RelayChannel[i], GPIO.OUT) # set RelayChannel[i] as output pin
 
