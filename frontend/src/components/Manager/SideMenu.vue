@@ -6,8 +6,9 @@
     <div class="rooms">
       <div
         class="room"
-        v-for="item in manager"
-        :key="item.name"
+        v-for="(item,index) in manager"
+		:key="index"
+        
         contentEditable="false"
         readonly
         tabindex="0"

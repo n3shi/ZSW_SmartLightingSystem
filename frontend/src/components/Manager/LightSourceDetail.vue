@@ -9,9 +9,10 @@
     <button class="resetButton closeButton" @click="this.close">
       <v-icon name="times" scale="2" />
     </button>
-    <p class="lightsourceName">
+	<input class="lightsourceName" type=text :value="choosenBlock.name" />
+    <!--<p class="lightsourceName">
       {{ this.choosenBlock.name }}
-    </p>
+    </p>-->
     <div class="lightIntensityContainer">
       <p class="lightIntensity">
         Light intensity
@@ -182,7 +183,17 @@ export default {
 .mainWrapper .lightsourceName {
   font-size: 2rem;
   margin-bottom: 2rem;
+  outline: none;
+  background: none;
+  color:white;
+  border:none;
+  
 }
+
+.lightsourceName:focus{
+	text-decoration: underline;
+}
+
 .lightIntensitySliderContainer {
   display: flex;
   justify-content: space-between;
