@@ -63,21 +63,21 @@ export default {
     },
   },
 
-  mounted: function() {
-    this.load();
-  },
+//  mounted: function() {
+//    this.load();
+//  },
 
   methods: {
-    load() {
-      axios
-        .get("/technical/getInstallation/1")
-        .then((m) => {
-          console.log(m.data);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    },
+    //load() {
+    //  axios
+    //    .get("/technical/getInstallation/1")
+    //    .then((m) => {
+    //      console.log(m.data);
+    //    })
+    //    .catch((e) => {
+    //      console.error(e);
+    //    });
+    //},
 
     sendJson() {
       console.log(this.jsonData);
@@ -88,7 +88,7 @@ export default {
       //wyślij json
       let token = undefined;
       axios
-        .post("/setConfig", { ...this.jsonData, token })
+        .post("/relay/setConfig", { ...this.jsonData, token })
         .then((m) => {
           console.log(m);
         })
