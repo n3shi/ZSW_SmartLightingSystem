@@ -25,7 +25,7 @@
       <div class="lightIntensitySliderContainer">
         <v-icon name="sun" scale="1.5" />
         <div class="slider">
-			<vue-slider v-model="lightValue" v-bind="options" @change="choosenBlock.funcVal = lightValue"/>
+			<vue-slider v-model="lightValue" v-bind="options" @change="choosenBlock.funcArg = lightValue"/>
         </div>
         <v-icon name="sun" scale="1.5" color="#ffba08" />
       </div>
