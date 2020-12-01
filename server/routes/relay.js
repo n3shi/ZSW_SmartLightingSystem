@@ -81,7 +81,7 @@ module.exports = function(queries) {
     router.post('/setConfig', function (req, res) {
         try{
             //let config = helpers.checkQuery(req.body, [])
-            console.log(req.body)
+            console.log(JSON.stringify(req.body,null,4))
 
             res.send({"status": "ok"})
         }catch (e) {
