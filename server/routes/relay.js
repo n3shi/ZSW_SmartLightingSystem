@@ -78,10 +78,14 @@ module.exports = function(queries) {
     * opis: funkcja pozwala zapisac ustawienia przekaznikow
     * body: instalationID
     */
-    router.post('/setConfig', function (req, res) {
+    router.post('/setConfig', async function (req, res) {
         try{
-            //let config = helpers.checkQuery(req.body, [])
+            let config = helpers.checkQuery(req.body, ['config'])
+            let id = 1
+
             console.log(JSON.stringify(req.body,null,4))
+
+            console.log("update:", await queries.installation.setR(config.config, id))
 
             res.send({"status": "ok"})
         }catch (e) {
