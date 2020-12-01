@@ -58,12 +58,14 @@
       </button>
     </div>
     <vue-timepicker
-      v-model="this.choosenBlock.begin"
+      v-model="beginTimeInput"
       format="HH:mm"
+      @change="changeBeginTime"
     ></vue-timepicker>
     <vue-timepicker
-      v-model="this.choosenBlock.end"
+      v-model="endTimeInput"
       format="HH:mm"
+      @change="changeEndTime"
     ></vue-timepicker>
     <button class="resetButton deletebutton">
       Delete
@@ -95,7 +97,8 @@ export default {
       isOn: undefined,
       lightValue: 0, // wartość slidera od mocy świecenia
       test: "",
-
+      beginTimeInput: "",
+      endTimeInput: "",
       //opcje slidera
       options: {
         dotSize: 14,
@@ -136,6 +139,14 @@ export default {
         labelActiveStyle: void 0,
       },
     };
+  },
+  updated() {
+    this.beginTimeInput = this.choosenBlock.begin;
+    this.endTimeInput = this.choosenBlock.end;
+  },
+  created() {
+    this.beginTimeInput = this.choosenBlock.begin;
+    this.endTimeInput = this.choosenBlock.end;
   },
   methods: {
     consolelog(eventData) {
