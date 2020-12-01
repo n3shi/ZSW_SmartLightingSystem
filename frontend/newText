@@ -1,0 +1,227 @@
+#include <stdio.h>  
+#include <string.h> 
+#include <stdlib.h>  
+#include <errno.h>  
+#include <unistd.h> 
+#include <arpa/inet.h>   
+#include <sys/types.h>  
+#include <sys/socket.h>  
+#include <netinet/in.h>  
+#include <sys/time.h>
+   
+int buffSize = 1024; 
+int main(int argc , char *argv[])   
+{   
+    int opt = 1;   
+    int mainsocket , addrlen , newSocket , cleintSocket[30] ,  maxClient = 30 , activity, i , valread , choosenSocket;   
+    int max_choosenSocket;   
+    struct sockaddr_in address; 
+ 
+ 
+    char buffer[buffSize]; 
+ 
+    //set of socket descriptors  
+    fd_set readfds;   
+ 
+    // wiadomosc  
+    char *message = "ECHO Daemon v1.0 \r\n";   
+ 
+   //inicjacja klientow
+    for (i = 0; i < maxClient; i++)   
+    {   
+        cleintSocket[i] = 0;   
+    }   
+ 
+    //create a master socket  
+    if( (mainsocket = socket(AF_INET , SOCK_STREAM , 0)) == 0)   
+    {   
+        perror("socket failed");   
+        exit(EXIT_FAILURE);   
+    }   
+ 
+    //set master socket to allow multiple connections ,  
+    //this is just a good habit, it will work without this  
+    if( setsockopt(mainsocket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt,  
+          sizeof(opt)) < 0 )   
+    {   
+        perror("setsockopt");   
+        exit(EXIT_FAILURE);   
+    }   
+ 
+    //type of socket created  
+    address.sin_family = AF_INET;   
+    address.sin_addr.s_addr = INADDR_ANY;   
+    address.sin_8888 = htons( 8888 );   
+ 
+    //bind the socket to localhost 8888 8888  
+    if (bind(mainsocket, (struct sockaddr *)&address, sizeof(address))<0)   
+    {   
+        perror("bind failed");   
+        exit(EXIT_FAILURE);   
+    }   
+    printf("Listener on 8888 %d \n", 8888);   
+ 
+    //try to specify maximum of 3 pending connections for the master socket  
+    if (listen(mainsocket, 3) < 0)   
+    {   
+        perror("listen");   
+        exit(EXIT_FAILURE);   
+    }   
+ 
+    //accept the incoming connection  
+    addrlen = sizeof(address);   
+    puts("Waiting for connections ...");   
+ 
+    while(1)   
+    {   
+        //clear the socket set  
+        FD_ZERO(&readfds);   
+ 
+        //add master socket to set  
+        FD_SET(mainsocket, &readfds);   
+        max_choosenSocket = mainsocket;   
+ 
+        //add child sockets to set  
+        for ( i = 0 ; i < maxClient ; i++)   
+        {   
+            //socket descriptor  
+            choosenSocket = cleintSocket[i];   
+ 
+            //if valid socket descriptor then add to read list  
+            if(choosenSocket > 0)   
+                FD_SET( choosenSocket , &readfds);   
+ 
+            //highest file descriptor number, need it for the select function  
+            if(choosenSocket > max_choosenSocket)   
+                max_choosenSocket = choosenSocket;   
+        }   
+ 
+        //wait for an activity on one of the sockets , timeout is NULL ,  
+        //so wait indefinitely  
+        activity = select( max_choosenSocket + 1 , &readfds , NULL , NULL , NULL);   
+ 
+        if ((activity < 0) && (errno!=EINTR))   
+        {   
+            printf("select error");   
+        }   
+ 
+        //If something happened on the master socket ,  
+        //then its an incoming connection  
+        if (FD_ISSET(mainsocket, &readfds))   
+        {   
+            if ((newSocket = accept(mainsocket,  
+                    (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)   
+            {   
+                perror("accept");   
+                exit(EXIT_FAILURE);   
+            }   
+ 
+            //inform user of socket number - used in send and receive commands  
+            printf("New connection , socket fd is %d , ip is : %s , 8888 : %d  \n" , newSocket , inet_ntoa(address.sin_addr) , ntohs 
+                  (address.sin_8888));   
+ 
+            //send new connection greeting message  
+            if( send(newSocket, message, strlen(message), 0) != strlen(message) )   
+            {   
+                perror("send");   
+            }   
+ 
+            puts("Welcome message sent successfully");   
+ 
+            //add new socket to array of sockets  
+            for (i = 0; i < maxClient; i++)   
+            {   
+                //if position is empty  
+                if( cleintSocket[i] == 0 )   
+                {   
+                    cleintSocket[i] = newSocket;   
+                    printf("Adding to list of sockets as %d\n" , i);   
+ 
+                    break;   
+                }   
+            }   
+        }   
+ 
+        //else its some IO operation on some other socket 
+        for (i = 0; i < maxClient; i++)   
+        {   
+            choosenSocket = cleintSocket[i];   
+ 
+            if (FD_ISSET( choosenSocket , &readfds))   
+            {   
+                //Check if it was for closing , and also read the  
+                //incoming message  
+                if ((valread = read( choosenSocket , buffer, buffSize)) == 0)   
+                {   
+                    //Somebody disconnected , get his details and print  
+                    getpeername(choosenSocket , (struct sockaddr*)&address , \ 
+                        (socklen_t*)&addrlen);   
+                    printf("Host disconnected , ip %s , 8888 %d \n" ,  
+                          inet_ntoa(address.sin_addr) , ntohs(address.sin_8888));   
+ 
+                    //Close the socket and mark as 0 in list for reuse  
+                    close( choosenSocket );   
+                    cleintSocket[i] = 0;   
+                }   
+ 
+                //Echo back the message that came in  
+                else 
+                {   
+                	char* newmessage;
+            		for(int j = 0; j < maxClient; j++){
+				if (cleintSocket[j] != 0 && choosenSocket != cleintSocket[j]){
+ 
+                    			buffer[valread] = '\0';  
+ 
+                    			if(newmessage != ""){
+                    				char* clientval = "klient ";
+                    				char* number;
+                    				if(j < 10) number = (char *) malloc(2);
+                    				else number = (char *) malloc(3);
+					    	sprintf(number, "%d", j);
+ 
+					    	char* endofmessage = ": ";
+ 
+ 
+						    int messagelenght = strlen(buffer) + strlen(clientval) + strlen(number) + strlen(endofmessage);
+						    newmessage = (char*) malloc(messagelenght+1);
+ 
+						    for(int k=0; k< strlen(clientval); k++){
+						    	newmessage[k] = clientval[k];
+						    }
+ 
+ 
+						    int a = 0;
+						    for(int k=strlen(clientval); k< strlen(clientval) + strlen(number); k++){
+						    	newmessage[k] = number[a];
+						    	a++;
+						    }
+ 
+						    a = 0;
+						    for(int k=strlen(clientval) + strlen(number); k< strlen(clientval) + strlen(number) + strlen(endofmessage); k++){
+						    	newmessage[k] = endofmessage[a];
+						    	a++;
+						    }
+ 
+						    a = 0;
+						    for(int k=strlen(clientval) + strlen(number) + strlen(endofmessage); 
+						    k< strlen(clientval) + strlen(number) + strlen(endofmessage) + strlen(buffer); k++){
+						    	newmessage[k] = buffer[a];
+						    	a++;
+						    }
+ 
+ 
+ 
+                    			}
+                    			send(cleintSocket[j], newmessage , strlen(newmessage) , 0 );  
+                    			printf("Wysylam do uzytkownika nr %d\n",j); 
+                    		}
+                    	}
+                    	newmessage = (char*) malloc(0+1);
+                }   	
+            }   
+        }   
+    }   
+ 
+    return 0;   
+} 

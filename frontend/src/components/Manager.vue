@@ -56,12 +56,12 @@ export default {
 
   methods: {
 	load(){
-				axios.get("/technical/getInstallation/1").then(m=>{
-					this.$store.commit('getCurrentOptions',m.data);
-				}).catch(e => {
-					console.error(e)
-				})
-			},
+		axios.get("/technical/getInstallation/1").then(m=>{
+			this.$store.commit('getCurrentOptions',m.data);
+		}).catch(e => {
+			console.error(e)
+		})
+	},
   },
  
   components: {
