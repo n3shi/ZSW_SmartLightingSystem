@@ -55,6 +55,15 @@ export default {
   },
 
   methods: {
+<<<<<<< HEAD
+	load(){
+		axios.get("/technical/getInstallation/1").then(m=>{
+			this.$store.commit('getCurrentOptions',m.data);
+		}).catch(e => {
+			console.error(e)
+		})
+	},
+=======
     load() {
       axios
         .get("/technical/getInstallation/1")
@@ -65,6 +74,7 @@ export default {
           console.error(e);
         });
     },
+>>>>>>> 83fa0038317fee5b2a05268f4bd608e42ec8b710
   },
 
   components: {
