@@ -1,18 +1,16 @@
 module.exports = function (queries) {
-    let EventEmitter = require('events')
     let WebSocket = require('ws');
-    let protocol = require('./protocol')
     let wss
 
     /**
      * Bind port ale listen for connections
      */
     const connect = function () {
-        wss = new WebSocket.Server({port: this._private.port});
+        wss = new WebSocket.Server({port: 8050});
 
         wss.on('connection', function connection(ws, req) {
             _onSocketConnect(ws, req)
-        });
+        })
 
         wss.on('error', e => {
             console.error("webserver error:", e)
@@ -25,12 +23,12 @@ module.exports = function (queries) {
      * @param req
      * @private
      */
-    _onSocketConnect = function (socket, req) {
+    const _onSocketConnect = function (socket, req) {
         let self = this
 
-        socket.on('message', data => {
-
-            //obsluga zapytania
+        socket.on('message', async data => {
+            let d = await queries.rpi.findConfigByKey({key: data})
+            socket.send(JSON.stringify(d))
         })
 
         socket.on('error', error => {

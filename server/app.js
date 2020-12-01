@@ -4,15 +4,18 @@ let favicon = require('static-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+let process = require('process')
+
+process.env.PORT = 1337
 
 let queries = require("./queries")
 let routes = require('./routes/index')(queries)
 let users = require('./routes/users')(queries)
 let relay = require('./routes/relay')(queries)
 let technical = require('./routes/technical')(queries)
+let rpiServer = require("./rpiServer")(queries)
 
 let app = express();
-
 
 console.log("queries:", queries.availableFunc())
 

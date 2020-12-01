@@ -1,0 +1,13 @@
+[Unit]
+Description=Light management system
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/node <path>
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target

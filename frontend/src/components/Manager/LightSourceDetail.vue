@@ -6,44 +6,55 @@
       sidePanelLightMode: !this.darkMode,
     }"
   >
-    <p class="lighsourceName">
+    <button class="resetButton closeButton" @click="this.close">
+      <v-icon name="times" scale="2" />
+    </button>
+    <p class="lightsourceName">
       {{ this.choosenBlock.name }}
     </p>
-    <div>
-      <p class="LightIntensity">
+    <div class="lightIntensityContainer">
+      <p class="lightIntensity">
         Light intensity
       </p>
-      <vue-slider v-model="lightValue" v-bind="options" />
+      <div class="lightIntensitySliderContainer">
+        <v-icon name="sun" scale="1.5" />
+        <div class="slider">
+          <vue-slider v-model="lightValue" v-bind="options" />
+        </div>
+        <v-icon name="sun" scale="1.5" color="#ffba08" />
+      </div>
     </div>
-    <button
-      @click="setLight('on')"
-      class="resetButton buttonContainer"
-      :class="{
-        onButtonLightMode: this.choosenBlock.func === 'on' && !this.darkMode,
-        onButtonDarkMode: this.choosenBlock.func === 'on' && this.darkMode,
-        offButtonLightMode: this.choosenBlock.func === 'off' && !this.darkMode,
-        offButtonDarkMode: this.choosenBlock.func === 'off' && this.darkMode,
-      }"
-    >
-      On
-    </button>
-    <button
-      @click="setLight('off')"
-      class="resetButton buttonContainer"
-      :class="{
-        onButtonLightMode: this.choosenBlock.func === 'off' && !this.darkMode,
-        onButtonDarkMode: this.choosenBlock.func === 'off' && this.darkMode,
-        offButtonLightMode: this.choosenBlock.func === 'on' && !this.darkMode,
-        offButtonDarkMode: this.choosenBlock.func === 'on' && this.darkMode,
-      }"
-    >
-      Off
-    </button>
-
-    <SheduleAdd />
+    <div class="buttonsContainer">
+      <button
+        @click="setLight('on')"
+        class="resetButton buttonContainer"
+        :class="{
+          onButtonLightMode: this.choosenBlock.func === 'on' && !this.darkMode,
+          onButtonDarkMode: this.choosenBlock.func === 'on' && this.darkMode,
+          offButtonLightMode:
+            this.choosenBlock.func === 'off' && !this.darkMode,
+          offButtonDarkMode: this.choosenBlock.func === 'off' && this.darkMode,
+        }"
+      >
+        On
+      </button>
+      <button
+        @click="setLight('off')"
+        class="resetButton buttonContainer"
+        :class="{
+          onButtonLightMode: this.choosenBlock.func === 'off' && !this.darkMode,
+          onButtonDarkMode: this.choosenBlock.func === 'off' && this.darkMode,
+          offButtonLightMode: this.choosenBlock.func === 'on' && !this.darkMode,
+          offButtonDarkMode: this.choosenBlock.func === 'on' && this.darkMode,
+        }"
+      >
+        Off
+      </button>
+    </div>
     <button class="resetButton deletebutton">
       Delete
     </button>
+    <SheduleAdd />
   </div>
 </template>
 
@@ -51,11 +62,15 @@
 import SheduleAdd from "@/components/Manager/SheduleAdd.vue";
 import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/default.css";
+import Icon from "vue-awesome/components/Icon";
+import "vue-awesome/icons/times";
+import "vue-awesome/icons/sun";
 export default {
   name: "LightSourceDetail",
   components: {
     SheduleAdd,
     VueSlider,
+    "v-icon": Icon,
   },
   data: function() {
     return {
@@ -124,6 +139,11 @@ export default {
 
       //this.$store.commit('setAllRoms');
     },
+    close() {
+      this.$store.commit("setActive", false);
+      this.$store.commit("setChoosenBlock", undefined);
+      this.$store.commit("setLightSourceIndex", -1);
+    },
   },
   computed: {
     darkMode() {
@@ -151,12 +171,46 @@ export default {
 <style>
 .mainWrapper {
   min-height: 100%;
-  padding: 0 2rem;
+  padding: 2rem 2rem;
   box-sizing: border-box;
   color: white;
+  display: flex;
+  flex-direction: column;
   width: 20rem;
+  text-align: center;
 }
-
+.mainWrapper .lightsourceName {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.lightIntensitySliderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.lightIntensitySliderContainer .slider {
+  flex: 1;
+  padding: 0 0.8rem;
+}
+.mainWrapper .lightIntensity {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.mainWrapper .deletebutton {
+  color: red;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.mainWrapper .closeButton {
+  align-self: flex-end;
+  margin-bottom: 1rem;
+}
+.mainWrapper .buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rem;
+}
 .deletebutton {
   color: rgba(208, 0, 0, 1);
   font-family: Roboto;
