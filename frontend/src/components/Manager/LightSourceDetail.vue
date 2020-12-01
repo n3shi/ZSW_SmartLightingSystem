@@ -186,6 +186,22 @@ export default {
       this.$store.commit("setChoosenBlock", undefined);
       this.$store.commit("setLightSourceIndex", -1);
     },
+    changeBeginTime(data) {
+      const time = data.displayTime;
+      this.choosenBlock.begin = time;
+      var temp = this.allRooms.findIndex((el) => el.name == this.name);
+      this.allRooms[temp].lightSources[this.index] = this.choosenBlock;
+
+      this.$store.commit("setAllRooms", this.allRooms);
+    },
+    changeEndTime(data) {
+      const time = data.displayTime;
+      this.choosenBlock.end = time;
+      var temp = this.allRooms.findIndex((el) => el.name == this.name);
+      this.allRooms[temp].lightSources[this.index] = this.choosenBlock;
+
+      this.$store.commit("setAllRooms", this.allRooms);
+    },
   },
   computed: {
     darkMode() {
