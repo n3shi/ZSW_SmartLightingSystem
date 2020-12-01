@@ -60,7 +60,10 @@ export default {
     },
     getButtonStyle() {
       return this.darkMode ? "offButtonDarkMode" : "offButtonLightMode";
-    },
+	},
+	jsonData() {
+	return this.$store.getters.getCurrentOptions;
+	},
   },
 
 //  mounted: function() {
@@ -86,9 +89,13 @@ export default {
 
       //var url = ""
       //wyślij json
-      let token = undefined;
+		let token = 123456789;
+		console.log({...this.jsonData, token})
+		console.log(this.jsonData)
+		console.log(token)
+		console.log()
       axios
-        .post("/relay/setConfig", { ...this.jsonData, token })
+        .post("/relay/setConfig", { config:this.jsonData, token })
         .then((m) => {
           console.log(m);
         })
@@ -118,10 +125,8 @@ export default {
     },
     toggleDarkMode() {
       this.$store.commit("toggleDarkMode");
-    },
-    jsonData() {
-      return this.$store.getters.getJsonData;
-    },
+	},
+	
   },
 };
 </script>

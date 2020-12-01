@@ -7,7 +7,7 @@
       <div
         class="room"
         v-for="item in manager"
-        :key="item.id"
+        :key="item.name"
         contentEditable="false"
         readonly
         tabindex="0"
@@ -40,6 +40,11 @@ export default {
     //  manager: [],
       a: 0,
     };
+  },
+  watch: {
+	manager() {
+		console.log(this.manager);
+	}
   },
   methods: {
     updateName(name) {

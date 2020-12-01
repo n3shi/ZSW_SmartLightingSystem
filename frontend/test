@@ -128,3 +128,162 @@ Off</span>
 </div>
 </body>
 </html>
+
+
+
+//1. Generowanie potencjalnej populacji
+
+//Zmienne:
+t; // temp aktualna
+tMin; // temp minimalna
+antystagnacja; // liczba okreslajaca ilosc zbadanych scierzek w danym obszarze lokalnym bez poprawienia wyniku
+antyVal = rozmiarMacierzy * 4; // maksymalna ilosc slabych wynikow z rzedu
+populacja[rozmiarPopulacji]; // tablica nowych populacji
+index = 0; //polozenie nowego osobnika w populacji
+
+sa() {
+	wybierzLosowoRozwiazanieA();
+
+	while(t > tMin){
+
+		stworzRozwiazanieB(); // tworzenie poprzez zamiane dwoch losowych elementow w A
+
+		if(Kryterium(B) < Kryterium(A)){
+			A = B;
+			zresetujWartoscAntystagnacji();
+		}
+		else if( random(0,1) < P() ) {
+			A = B; 
+			zresetujWartoscAntystagnacji();
+		}
+		else 
+			antystagnacja++;
+
+		if( antystagnacja > antyVal){
+			
+			//sprawdzenie czy najlepsza sciezka w tym obszarze lokalnym jest potencjalnie dobrym rozwiazaniem
+			if (A.dlugoscSciezki < aktualnieNajlepszaSciezka * 2,75){ //jesli dlugosc jest w miare optymalnym rozwiazaniem
+				//dodaj najlepsza sciezke lokalna do zbioru najlepszych sciezek lokalnych
+				populacja[index] = A;
+				index++;
+
+				if( index == rozmiarPopulacji -1 ) //jak zostaly wybrane wszystkie elementy w populacji to zakoncz petle
+					break;
+			} 
+			
+			wybierzLosowoRozwiazanieA();
+			zresetujWartoscAntystagnacji();
+
+		}
+		obnizTemperature(t);
+	}
+
+	if (index != rozmiarPopulacji -1) //jesli nie zostaly wybrane wszystkie obiecujace osobniki populacji to pozostale wybierz losowo
+		while(index != rozmiarPopulacji -1{
+			populacja[index] = znajdzLosowaSciezke();
+			index++;
+		} 
+
+
+	return populacja;
+}
+
+
+// 2. Algorytm genetyczny na podstawie utworzonej populacji zawierajace osobniki obiecujace
+
+warunekStopu;
+liczbaIteracji;
+rozmiarPopulacji;
+
+wspolczynnikKrzyzowania;
+wspolczynnikMutacji;
+
+iloscZamian;
+Czas c; //obiekt pozwalajacy na mierzenie czasu
+
+genetyk( populacja ) {
+
+	inicjacjaPopulacji(populacja, rozmiarPopulacji);
+	najlepszyOsobnik =  wskazanieNajlepszegoOsobnika(populacja) {
+							forEach(populacja){
+
+								tablicaDopasowania[i] = 1.0 / znajdzDlugoscSciezki( populacja [el] );
+
+								if(optimum > znajdzDlugoscSciezki( populacja[el] )){
+									optimum = znajdzDlugoscSciezki( populacja[el] );
+								}
+							}
+
+							generacjaTablicyDopasowaniaPopulacji( tablicaDopasowania ) {
+								forEach(tablicaDopasowania){
+									tablicaDopasowania[i] /= sum;
+
+									if(i == 0)
+										zsumowanaTablicaDopasowania[i] == tablicaDopasowania[i];
+									else
+										zsumowanaTablicaDopasowania[i] = zsumowanaTablicaDopasowania[i - 1] + tablicaDopasowania[i];
+								}
+							}
+						};
+
+	c.czasStart();
+	for(int i=0; i < liczbaIteracji; i ++){
+		
+		populacja.nowePokolenie() {
+
+			for(int i = 0; i < rozmiarPopulacji; i++){
+				rodzic1 = wybierzRodzica(){
+							forEach(rozmiarPopulacji){
+								if( getRandomDouble() < zsumowanaTablicaDopasowania[i] ){
+									return populacja[i];
+								} else {
+									i++;
+								}
+							}
+							return populacja[0];
+						 };
+				rodzic2 = wybierzRodzica() { // ta sama funkcja co wyzej };
+				
+				nowePokolenie[i] = skrzyzowanie(rodzic1, rodzica2) {
+
+											int poczatek = rand() % (rozmiar-1);
+											int koniec = rand() % (rozmiar - start - 1);
+											koniec += poczatek + 1;
+
+											dziecko = zwrocWylosowanyFragment( poczatek, koniec );
+
+											for (int i = 0; i < rozmiarMacierzy; i++) {
+
+												for( int j = 0; j < dziecko.rozmiar(); j++){
+													if( dziecko[j] == rodzic2[i] ) //czyli jesli juz dany pkt jest w sciezce
+														break;  // to nic nie rob
+													else if ( j == dziecko.rozmiar() - 1) // a jesli petla doszla do konca i nie znalazla takiego pkt
+														dziecko.push_back( rodzic2 [i] ) // to go dodajemy do nowego dzieciaka
+												}
+											}
+											return dziecko;
+										}
+									};
+
+				if (getRandomDouble() < wspolczynnikMutacji) 
+					nowePokolenie[i] = mutacja(nowePokolenie[i]);
+			}
+
+			forEach(populacja){
+				populacja[i] = nowePokolenie[i];
+			}
+		}
+
+		najlepszyOsobnik = wskazanieNajlepszegoOsobnika(populacja);
+
+		if(najlepszyOsobnik.sciezka == optimum)
+			break;
+
+		c.czasStop();
+		if(c.czasWykonania() > warunekStopu){
+			break;
+		}
+	}
+
+	return najlepszyOsobnik;
+}

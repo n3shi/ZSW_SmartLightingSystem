@@ -13,7 +13,7 @@ int buffSize = 1024;
 int main(int argc , char *argv[])   
 {   
     int opt = 1;   
-    int mainsocket , addrlen , newSocket , cleintSocket[30] ,  maxClient = 30 , activity, i , valread , choosenSocket;   
+    int mainSocket , addrlen , newSocket , clientSocket[30] ,  maxClient = 30 , activity, i , valread , choosenSocket;   
     int max_choosenSocket;   
     struct sockaddr_in address; 
  
@@ -27,197 +27,165 @@ int main(int argc , char *argv[])
     char *message = "ECHO Daemon v1.0 \r\n";   
  
    //inicjacja klientow
-    for (i = 0; i < maxClient; i++)   
-    {   
-        cleintSocket[i] = 0;   
-    }   
+    for (i = 0; i < maxClient; i++)     
+        clientSocket[i] = 0;   
  
-    //create a master socket  
-    if( (mainsocket = socket(AF_INET , SOCK_STREAM , 0)) == 0)   
+    // mainSocket
+    if( (mainSocket = socket(AF_INET , SOCK_STREAM , 0)) == 0)   
     {   
         perror("socket failed");   
         exit(EXIT_FAILURE);   
     }   
  
-    //set master socket to allow multiple connections ,  
-    //this is just a good habit, it will work without this  
-    if( setsockopt(mainsocket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt,  
+	//włączenie wielu połączeń dla mainSocket (działa też bez tej lini w sumie )
+    if( setsockopt(mainSocket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt,  
           sizeof(opt)) < 0 )   
     {   
         perror("setsockopt");   
         exit(EXIT_FAILURE);   
     }   
  
-    //type of socket created  
+    //struktura socketa
     address.sin_family = AF_INET;   
     address.sin_addr.s_addr = INADDR_ANY;   
     address.sin_8888 = htons( 8888 );   
  
-    //bind the socket to localhost 8888 8888  
-    if (bind(mainsocket, (struct sockaddr *)&address, sizeof(address))<0)   
+    //bindowanie mainSocketa
+    if (bind(mainSocket, (struct sockaddr *)&address, sizeof(address))<0)   
     {   
         perror("bind failed");   
         exit(EXIT_FAILURE);   
     }   
     printf("Listener on 8888 %d \n", 8888);   
  
-    //try to specify maximum of 3 pending connections for the master socket  
-    if (listen(mainsocket, 3) < 0)   
-    {   
-        perror("listen");   
-        exit(EXIT_FAILURE);   
-    }   
+    //Ustawienie maksymalnej liczby socketow na 10; 
+    listen(mainSocket, 10)
  
     //accept the incoming connection  
     addrlen = sizeof(address);   
-    puts("Waiting for connections ...");   
+    //puts("Waiting for connections ...");   
  
     while(1)   
     {   
-        //clear the socket set  
+        //czyszczenie ustawien 
         FD_ZERO(&readfds);   
+        //Dołączenie mainSocketa 
+        FD_SET(mainSocket, &readfds);   
+        max_choosenSocket = mainSocket;   
  
-        //add master socket to set  
-        FD_SET(mainsocket, &readfds);   
-        max_choosenSocket = mainsocket;   
- 
-        //add child sockets to set  
+        //podłączenie dziecka
         for ( i = 0 ; i < maxClient ; i++)   
         {   
-            //socket descriptor  
-            choosenSocket = cleintSocket[i];   
- 
-            //if valid socket descriptor then add to read list  
+            choosenSocket = clientSocket[i];   
             if(choosenSocket > 0)   
                 FD_SET( choosenSocket , &readfds);   
- 
-            //highest file descriptor number, need it for the select function  
             if(choosenSocket > max_choosenSocket)   
                 max_choosenSocket = choosenSocket;   
         }   
  
-        //wait for an activity on one of the sockets , timeout is NULL ,  
-        //so wait indefinitely  
+        //czeka w nieskonczonosc az jeden socket cos odpowie
         activity = select( max_choosenSocket + 1 , &readfds , NULL , NULL , NULL);   
- 
-        if ((activity < 0) && (errno!=EINTR))   
+  
+		//wywolanie akcji na klientach w przypadku akcji na mainSocket
+        if (FD_ISSET(mainSocket, &readfds))   
         {   
-            printf("select error");   
-        }   
- 
-        //If something happened on the master socket ,  
-        //then its an incoming connection  
-        if (FD_ISSET(mainsocket, &readfds))   
-        {   
-            if ((newSocket = accept(mainsocket,  
+            if ((newSocket = accept(mainSocket,  
                     (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)   
             {   
                 perror("accept");   
                 exit(EXIT_FAILURE);   
             }   
  
-            //inform user of socket number - used in send and receive commands  
-            printf("New connection , socket fd is %d , ip is : %s , 8888 : %d  \n" , newSocket , inet_ntoa(address.sin_addr) , ntohs 
-                  (address.sin_8888));   
- 
-            //send new connection greeting message  
+            //zwrocenie info o polaczeniu z klientem
+            printf("New connection , socket fd: %d, port: %d\n", newSocket, ntohs (address.sin_8888));   
+   
             if( send(newSocket, message, strlen(message), 0) != strlen(message) )   
             {   
                 perror("send");   
             }   
  
-            puts("Welcome message sent successfully");   
- 
-            //add new socket to array of sockets  
+            // przypisanie socketu do tablicy
             for (i = 0; i < maxClient; i++)   
             {   
-                //if position is empty  
-                if( cleintSocket[i] == 0 )   
+                if( clientSocket[i] == 0 )   
                 {   
-                    cleintSocket[i] = newSocket;   
-                    printf("Adding to list of sockets as %d\n" , i);   
- 
+                    clientSocket[i] = newSocket;   
                     break;   
                 }   
             }   
         }   
  
-        //else its some IO operation on some other socket 
+		//wysylanie/odbieranie wiadomosci od klientow
         for (i = 0; i < maxClient; i++)   
         {   
-            choosenSocket = cleintSocket[i];   
+            choosenSocket = clientSocket[i];   
  
             if (FD_ISSET( choosenSocket , &readfds))   
             {   
-                //Check if it was for closing , and also read the  
-                //incoming message  
                 if ((valread = read( choosenSocket , buffer, buffSize)) == 0)   
                 {   
-                    //Somebody disconnected , get his details and print  
                     getpeername(choosenSocket , (struct sockaddr*)&address , \ 
                         (socklen_t*)&addrlen);   
                     printf("Host disconnected , ip %s , 8888 %d \n" ,  
                           inet_ntoa(address.sin_addr) , ntohs(address.sin_8888));   
  
-                    //Close the socket and mark as 0 in list for reuse  
                     close( choosenSocket );   
-                    cleintSocket[i] = 0;   
+                    clientSocket[i] = 0;   
                 }   
- 
-                //Echo back the message that came in  
+
                 else 
                 {   
                 	char* newmessage;
             		for(int j = 0; j < maxClient; j++){
-				if (cleintSocket[j] != 0 && choosenSocket != cleintSocket[j]){
+						if (clientSocket[j] != 0 && choosenSocket != clientSocket[j]){
  
-                    			buffer[valread] = '\0';  
+							buffer[valread] = '\0';  
  
-                    			if(newmessage != ""){
-                    				char* clientval = "klient ";
-                    				char* number;
-                    				if(j < 10) number = (char *) malloc(2);
-                    				else number = (char *) malloc(3);
-					    	sprintf(number, "%d", j);
+							//utworzenie nowej wiadomosci dla wszystkich Klientow
+							if(newmessage != ""){
+								char* clientval = "klient ";
+								char* number;
+								if(j < 10) 
+									number = (char *) malloc(2);
+								else 
+									number = (char *) malloc(3);
+					    		sprintf(number, "%d", j);
  
-					    	char* endofmessage = ": ";
- 
- 
-						    int messagelenght = strlen(buffer) + strlen(clientval) + strlen(number) + strlen(endofmessage);
-						    newmessage = (char*) malloc(messagelenght+1);
- 
-						    for(int k=0; k< strlen(clientval); k++){
-						    	newmessage[k] = clientval[k];
-						    }
+					    		char* endofmessage = ": ";
  
  
-						    int a = 0;
-						    for(int k=strlen(clientval); k< strlen(clientval) + strlen(number); k++){
-						    	newmessage[k] = number[a];
-						    	a++;
-						    }
+								int messagelenght = strlen(buffer) + strlen(clientval) + strlen(number) + strlen(endofmessage);
+								newmessage = (char*) malloc(messagelenght+1);
  
-						    a = 0;
-						    for(int k=strlen(clientval) + strlen(number); k< strlen(clientval) + strlen(number) + strlen(endofmessage); k++){
-						    	newmessage[k] = endofmessage[a];
-						    	a++;
-						    }
- 
-						    a = 0;
-						    for(int k=strlen(clientval) + strlen(number) + strlen(endofmessage); 
-						    k< strlen(clientval) + strlen(number) + strlen(endofmessage) + strlen(buffer); k++){
-						    	newmessage[k] = buffer[a];
-						    	a++;
-						    }
- 
- 
- 
-                    			}
-                    			send(cleintSocket[j], newmessage , strlen(newmessage) , 0 );  
+								for(int k=0; k< strlen(clientval); k++){
+									newmessage[k] = clientval[k];
+								}
+	
+	
+								int a = 0;
+								for(int k=strlen(clientval); k< strlen(clientval) + strlen(number); k++){
+									newmessage[k] = number[a];
+									a++;
+								}
+	
+								a = 0;
+								for(int k=strlen(clientval) + strlen(number); k< strlen(clientval) + strlen(number) + strlen(endofmessage); k++){
+									newmessage[k] = endofmessage[a];
+									a++;
+								}
+	
+								a = 0;
+								for(int k=strlen(clientval) + strlen(number) + strlen(endofmessage); 
+								k< strlen(clientval) + strlen(number) + strlen(endofmessage) + strlen(buffer); k++){
+									newmessage[k] = buffer[a];
+									a++;
+								}
+							}
+                    			send(clientSocket[j], newmessage , strlen(newmessage) , 0 );  
                     			printf("Wysylam do uzytkownika nr %d\n",j); 
                     		}
                     	}
-                    	newmessage = (char*) malloc(0+1);
+                    	newmessage = (char*) malloc(0+1); //wyzerowanie wiadomosci
                 }   	
             }   
         }   

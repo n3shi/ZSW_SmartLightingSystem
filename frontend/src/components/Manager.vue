@@ -56,10 +56,13 @@ export default {
 
   methods: {
 	load(){
-		axios.post()
+		//axios.post()
+		//let self = this
 
 		axios.get("/technical/getInstallation/1").then(m=>{
-			this.$store.commit('setCurrentOptions',m.data);
+			console.log(m.data);
+			
+			this.$store.commit('setCurrentOptions',m.data.manager);
 		}).catch(e => {
 			console.error(e)
 		})
