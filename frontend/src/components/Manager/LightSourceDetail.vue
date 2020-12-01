@@ -9,7 +9,7 @@
     <button class="resetButton closeButton" @click="this.close">
       <v-icon name="times" scale="2" />
     </button>
-	<input class="lightsourceName" type=text :value="choosenBlock.name" />
+    <input class="lightsourceName" type="text" :value="choosenBlock.name" />
     <!--<p class="lightsourceName">
       {{ this.choosenBlock.name }}
     </p>-->
@@ -52,6 +52,14 @@
         Off
       </button>
     </div>
+    <vue-timepicker
+      v-model="this.choosenBlock.begin"
+      format="HH:mm"
+    ></vue-timepicker>
+    <vue-timepicker
+      v-model="this.choosenBlock.end"
+      format="HH:mm"
+    ></vue-timepicker>
     <button class="resetButton deletebutton">
       Delete
     </button>
@@ -66,12 +74,16 @@ import "vue-slider-component/theme/default.css";
 import Icon from "vue-awesome/components/Icon";
 import "vue-awesome/icons/times";
 import "vue-awesome/icons/sun";
+import VueTimepicker from "vue2-timepicker";
+// CSS
+import "vue2-timepicker/dist/VueTimepicker.css";
 export default {
   name: "LightSourceDetail",
   components: {
     SheduleAdd,
     VueSlider,
     "v-icon": Icon,
+    VueTimepicker,
   },
   data: function() {
     return {
@@ -120,6 +132,9 @@ export default {
     };
   },
   methods: {
+    consolelog(eventData) {
+      console.log(eventData);
+    },
     //nacisniecie On lub Off zmieni aktualnie wyswietlane swiatelko dla wybranego typa
     setLight(val) {
       //var temp = manager.lightSource.findIndex(el => el.relay == this.choosenBlock);
@@ -153,6 +168,7 @@ export default {
     choosenBlock() {
       return this.$store.getters.getChoosenBlock;
     },
+
     name() {
       return this.$store.getters.getCurrentRoomName;
     },
@@ -185,13 +201,12 @@ export default {
   margin-bottom: 2rem;
   outline: none;
   background: none;
-  color:white;
-  border:none;
-  
+  color: white;
+  border: none;
 }
 
-.lightsourceName:focus{
-	text-decoration: underline;
+.lightsourceName:focus {
+  text-decoration: underline;
 }
 
 .lightIntensitySliderContainer {
