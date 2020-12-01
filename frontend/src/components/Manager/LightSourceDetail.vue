@@ -9,10 +9,8 @@
     <button class="resetButton closeButton" @click="this.close">
       <v-icon name="times" scale="2" />
     </button>
-	<input class="lightsourceName" type=text :value="choosenBlock.name" />
-    <!--<p class="lightsourceName">
-      {{ this.choosenBlock.name }}
-    </p>-->
+	<input class="lightsourceName"  type=text :placeholder="choosenBlock.name" value="choosenBlock.name" v-model="test" @change="setLightName(test)" />
+
     <div class="lightIntensityContainer">
       <p class="lightIntensity">
         Light intensity
@@ -76,7 +74,8 @@ export default {
   data: function() {
     return {
       isOn: undefined,
-      lightValue: 0, // wartość slidera od mocy świecenia
+	lightValue: 0, // wartość slidera od mocy świecenia
+	test: '',
 
       //opcje slidera
       options: {
@@ -139,7 +138,16 @@ export default {
       this.$store.commit("setAllRooms", this.allRooms);
 
       //this.$store.commit('setAllRoms');
-    },
+	},
+	
+	setLightName(val) {
+		//console.log("dzialam" + val);
+		this.choosenBlock.name = val;
+		var temp = this.allRooms.findIndex((el) => el.name == this.name);
+		this.allRooms[temp].lightSources[this.index] = this.choosenBlock;
+
+		this.$store.commit("setAllRooms", this.allRooms);
+	},
     close() {
       this.$store.commit("setActive", false);
       this.$store.commit("setChoosenBlock", undefined);
