@@ -1,6 +1,6 @@
 let WebSocketClient = require('ws')
 
-let ws = new WebSocketClient("ws://dev.aplipage.pl");
+let ws = new WebSocketClient("ws://aplipage.pl");
 
 ws.on('open', function open() {
     ws.send(123456789)

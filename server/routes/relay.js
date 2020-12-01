@@ -79,7 +79,15 @@ module.exports = function(queries) {
     * body: instalationID
     */
     router.post('/setConfig', function (req, res) {
-        res.render('index', {title: 'Express'});
+        try{
+            //let config = helpers.checkQuery(req.body, [])
+            console.log(req.body)
+
+            res.send({"status": "ok"})
+        }catch (e) {
+            res.status(402)
+            res.send(e)
+        }
     });
 
 
