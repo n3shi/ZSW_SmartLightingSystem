@@ -61,7 +61,7 @@ installation.setR = async function(config, installationId){
                 console.log("config[r].lightSources[i]", config[r].lightSources[i])
                 await db.LIGHTSOURCE.update({
                     name: config[r].lightSources[i].name,
-                    begin: config[r].lightSources[i].relay,
+                    begin: config[r].lightSources[i].begin,
                     end: config[r].lightSources[i].end,
                     func: config[r].lightSources[i].func,
                     funcArg: config[r].lightSources[i].funcArg,
