@@ -11,12 +11,12 @@ module.exports = function(queries) {
      */
 
     router.use(function (req, res, next) {
-        if (req.body.token) {
+        //if (req.body.token) {
             next()
-        } else {
-            res.status(403)
-            res.send({error: "access denied"})
-        }
+        //} else {
+           // res.status(403)
+            //res.send({error: "access denied"})
+        //}
     })
 
     /*
