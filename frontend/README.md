@@ -5,13 +5,14 @@
 npm install
 ```
 
-### (Arter update app work on dedicate server. Check "Compiles and minifiles for production" to set new update.
+
 
 
 ### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
+### (Arter update app work on dedicate server. Check "Compiles and minifiles for production" to set new update)
 
 # Compiles and minifies for production
 ### 1. Compile project
