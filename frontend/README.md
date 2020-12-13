@@ -1,10 +1,12 @@
 # App
 
 ## Project setup
-### Arter update doesnt work as debug, check "Compiles and minifiles for production"
 ```
 npm install
 ```
+
+### (Arter update app work on dedicate server. Check "Compiles and minifiles for production" to set new update.
+
 
 ### Compiles and hot-reloads for development
 ```
