@@ -1,6 +1,7 @@
-# test
+# App
 
 ## Project setup
+### Arter update doesnt work as debug, check "Compiles and minifiles for production"
 ```
 npm install
 ```
